@@ -13,7 +13,7 @@ public class TestStompConnector : MonoBehaviour
     void Start()
     {
     #if UNITY_WEBGL && !UNITY_EDITOR
-        ConnectStomp("123"); // 예시 userId
+        ConnectStomp("123"); // 예시 
     #endif
     }
 
