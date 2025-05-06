@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnqueueButton : MonoBehaviour
 {
-    [SerializeField] TestStompConnector testStompConnector;
+    [SerializeField] StompConnector StompConnector;
 
     public void OnClickButton()
     {
-        testStompConnector.ConnectToServer("ws://localhost:8080/ws");
+        StompConnector.ConnectToServer("ws://localhost:8080/ws");
     }
 }

@@ -2,13 +2,13 @@ using System;
 using UnityEngine;
 using System.Runtime.InteropServices;
 
-public class TestStompConnector : MonoBehaviour
+public class StompConnector : MonoBehaviour
 {
     private static bool isConnected = false;
 
     private void Awake()
     {
-        gameObject.name = "TestStompConnector";
+        gameObject.name = "StompConnector";
     }
 
     // WebGL에서 JavaScript 함수 호출
@@ -37,25 +37,18 @@ public class TestStompConnector : MonoBehaviour
         
         // 예: 메시지 오면 OnMessageReceived 호출됨
         SubscribeToTopic(
-            "/queue/match-status/User1004", // $"/queue/match-status/{userId}" ~when feat/4 merged~
+            $"/queue/match-status/{SceneContext.UserID}",
             "OnMessageReceived",
             "match-sub"
         );
         // 예: 서버로 JSON 메시지 전송
         SendMessageToServer(
             "/app/game/match/queue",
-            "User1004" // userId ~when feat/4 merged~
+            SceneContext.UserID
         );
     }
 
-    [System.Serializable]
-    public class MatchedInfoDto
-    {
-        public string message;
-        public string user1;
-        public string user2;
-        public string sessionId;
-    }
+
     
     // 메시지 수신 처리
     public void OnMessageReceived(string message)
@@ -63,6 +56,7 @@ public class TestStompConnector : MonoBehaviour
         Debug.Log("매칭 메시지 수신: " + message);
 
         var matchInfo = JsonUtility.FromJson<MatchedInfoDto>(message);
+        SceneContext.MatchInfo = matchInfo;
 
         if (!string.IsNullOrEmpty(matchInfo.sessionId))
         {

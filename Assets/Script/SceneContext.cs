@@ -10,8 +10,14 @@ public class SceneContext : MonoBehaviour
         get; private set;
     }
 
+    public static MatchedInfoDto MatchInfo
+    {
+        get; set;
+    }
+
     private void Start()
     {
+        DontDestroyOnLoad(this);
         UserID = FindObjectOfType<UserInfo>().userID;
     }
 }

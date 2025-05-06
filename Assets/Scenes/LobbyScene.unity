@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 72222818}
   - component: {fileID: 72222817}
   m_Layer: 0
-  m_Name: TestStompConnector
+  m_Name: StompConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab779775ba46f4e499c956b19c879e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testStompConnector: {fileID: 72222817}
+  StompConnector: {fileID: 0}
 --- !u!1 &649166617
 GameObject:
   m_ObjectHideFlags: 0
