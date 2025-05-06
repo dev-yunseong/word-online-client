@@ -13,10 +13,10 @@ mergeInto(LibraryManager.library, {
 
     client.connect({}, function (frame) {
       console.log("Connected:", frame);
-      SendMessage("TestStompConnector", "OnConnected", JSON.stringify(frame.headers));
+      SendMessage("StompConnector", "OnConnected", JSON.stringify(frame.headers));
     }, function (error) {
       console.error("STOMP error:", error);
-      SendMessage("TestStompConnector", "OnError", error);
+      SendMessage("StompConnector", "OnError", error);
     });
   },
 
@@ -29,7 +29,7 @@ mergeInto(LibraryManager.library, {
 
     client.subscribe(topic, function (message) {
       console.log("Received message from", topic, ":", message.body);
-      SendMessage("TestStompConnector", callback, message.body);
+      SendMessage("StompConnector", callback, message.body);
     }, { id: subscriptionId });
   },
 
@@ -52,7 +52,7 @@ mergeInto(LibraryManager.library, {
         if (client) {
         client.disconnect(function () {
           console.log("Disconnected from STOMP");
-          SendMessage("TestStompConnector", "OnDisconnected", "Disconnected");
+          SendMessage("StompConnector", "OnDisconnected", "Disconnected");
         });
         }
     }
