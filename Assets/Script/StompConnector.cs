@@ -48,14 +48,7 @@ public class StompConnector : MonoBehaviour
         );
     }
 
-    [System.Serializable]
-    public class MatchedInfoDto
-    {
-        public string message;
-        public string user1;
-        public string user2;
-        public string sessionId;
-    }
+
     
     // 메시지 수신 처리
     public void OnMessageReceived(string message)
@@ -63,6 +56,7 @@ public class StompConnector : MonoBehaviour
         Debug.Log("매칭 메시지 수신: " + message);
 
         var matchInfo = JsonUtility.FromJson<MatchedInfoDto>(message);
+        SceneContext.MatchInfo = matchInfo;
 
         if (!string.IsNullOrEmpty(matchInfo.sessionId))
         {
