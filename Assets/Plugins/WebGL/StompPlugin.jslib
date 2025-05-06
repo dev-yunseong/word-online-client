@@ -1,5 +1,6 @@
 var client = null;
 
+
 mergeInto(LibraryManager.library, {
     // Function to connect to STOMP server
   ConnectStompSocket: function (urlPtr) {
