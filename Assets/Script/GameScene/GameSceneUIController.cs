@@ -12,7 +12,7 @@ public class GameSceneUIController : MonoBehaviour
     
     private void Start()
     {
-        leftUserIDText.text = SceneContext.MatchInfo.user1;
-        rightUserIDText.text = SceneContext.MatchInfo.user2;
+        leftUserIDText.text = SceneContext.MatchInfo.leftUserId;
+        rightUserIDText.text = SceneContext.MatchInfo.rightUserId;
     }
 }
