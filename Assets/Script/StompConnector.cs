@@ -9,6 +9,7 @@ public class StompConnector : MonoBehaviour
     private void Awake()
     {
         gameObject.name = "StompConnector";
+        DontDestroyOnLoad(this);
     }
 
     // WebGL에서 JavaScript 함수 호출
@@ -64,6 +65,9 @@ public class StompConnector : MonoBehaviour
 
             // 씬 전환 (예: GameScene)
             UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+            SubscribeToTopic($"/game/{SceneContext.MatchInfo.sessionId}/frameInfos/{SceneContext.UserID}",
+                "OnFrameInfoReceived",
+                "frame-sub");
         }
     }
 
@@ -153,5 +157,27 @@ public class StompConnector : MonoBehaviour
         {
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
+    }
+    
+    public void OnFrameInfoReceived(string json)
+    {
+        Debug.Log("FrameInfo 수신: " + json);
+
+        FrameInfo info = JsonUtility.FromJson<FrameInfo>(json);
+
+        // 마나 UI 업데이트
+         GameSceneUIController.Instance.UpdateMana(info.updatedMana);
+        //
+        // // 카드 추가
+        // foreach (string cardName in info.cards.added)
+        //     CardUI.Instance.AddCard(cardName);
+        //
+        // // 생성된 오브젝트 배치
+        // foreach (var created in info.objects.create)
+        //     ObjectSpawner.Instance.Spawn(created);
+        //
+        // // 기존 오브젝트 업데이트
+        // foreach (var updated in info.objects.update)
+        //     ObjectUpdater.Instance.Update(updated);
     }
 }
