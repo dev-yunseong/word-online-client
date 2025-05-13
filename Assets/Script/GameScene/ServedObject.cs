@@ -9,8 +9,8 @@ namespace Script.GameScene
         public void UpdateObject(UpdatedObjectDto updatedObjectDto)
         {
             transform.position = new Vector3(
-                updatedObjectDto.x, 
-                updatedObjectDto.y, 
+                updatedObjectDto.position.x, 
+                updatedObjectDto.position.y, 
                 0);
         }
     }

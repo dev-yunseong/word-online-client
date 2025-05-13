@@ -15,10 +15,10 @@ namespace Script.GameScene
         public void SpawnObject(CreatedObjectDto createdObjectDto)
         {
             Vector3 position = new Vector3(
-                createdObjectDto.x, 
-                createdObjectDto.y, 
+                createdObjectDto.position.x, 
+                createdObjectDto.position.y, 
                 0);
-            GameObject prefab = Resources.Load<GameObject>($"Prefabs/{createdObjectDto.prefabType}");
+            GameObject prefab = Resources.Load<GameObject>($"Prefabs/{createdObjectDto.type}");
             GameObject spawnedObject = Instantiate(prefab, position, Quaternion.identity);
             ServedObject servedObject = spawnedObject.AddComponent<ServedObject>();
             servedObject.id = createdObjectDto.id;

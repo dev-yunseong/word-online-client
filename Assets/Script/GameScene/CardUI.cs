@@ -11,5 +11,11 @@ namespace Script.GameScene
         {
             cardNameText.text = name;
         }
+        
+        // 버튼에 연결해서 호출 가능
+        public void OnCardClicked()
+        {
+            GetComponent<CardInputSender>().TryUseCard("Dummy",gameObject);
+        }
     }
 }

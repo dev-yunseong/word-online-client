@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class GameSceneUIController : MonoBehaviour
 {
-
     public static GameSceneUIController Instance;
     
     [SerializeField] private TextMeshProUGUI leftUserIDText;

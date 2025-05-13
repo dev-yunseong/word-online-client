@@ -2,7 +2,6 @@
 public class UpdatedObjectDto
 {
     public string id;
-    public int x;
-    public int y;
+    public Position position;
     public int hp;
 }

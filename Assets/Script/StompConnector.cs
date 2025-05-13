@@ -6,10 +6,18 @@ using Script.GameScene;
 public class StompConnector : MonoBehaviour
 {
     private static bool isConnected = false;
-
+    public static StompConnector Instance;
     private void Awake()
     {
         gameObject.name = "StompConnector";
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
         DontDestroyOnLoad(this);
     }
 
@@ -159,26 +167,64 @@ public class StompConnector : MonoBehaviour
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
     }
+
+    [System.Serializable]
+    public class TypeChecker
+    {
+        public string type;
+    }
+
+    [System.Serializable]
+    public class MagicValidInfo
+    {
+        public string type;
+        public bool valid;
+        public int updateMana;
+        public int id;
+    }
     
     public void OnFrameInfoReceived(string json)
     {
         Debug.Log("FrameInfo 수신: " + json);
 
-        FrameInfo info = JsonUtility.FromJson<FrameInfo>(json);
+        TypeChecker infotype = JsonUtility.FromJson<TypeChecker>(json);
 
-        // 마나 UI 업데이트
-         GameSceneUIController.Instance.UpdateMana(info.updatedMana);
-        //
-        // // 카드 추가
-         foreach (string cardName in info.cards.added)
-             GameSceneUIController.Instance.AddCard(cardName);
-        //
-        // // 생성된 오브젝트 배치
-        foreach (var created in info.objects.create)
-            ObjectSpawner.Instance.SpawnObject(created);
         
-        // // 기존 오브젝트 업데이트
-        foreach (var updated in info.objects.update)
-            ObjectUpdater.Instance.UpdateObject(updated);
+        switch (infotype.type)
+        {
+            case "frame":
+                FrameInfo info = JsonUtility.FromJson<FrameInfo>(json);
+                
+                // 마나 UI 업데이트
+                GameSceneUIController.Instance.UpdateMana(info.updatedMana);
+                //
+                // // 카드 추가
+                foreach (string cardName in info.cards.added)
+                    GameSceneUIController.Instance.AddCard(cardName);
+                //
+                // // 생성된 오브젝트 배치
+                foreach (var created in info.objects.create)
+                    ObjectSpawner.Instance.SpawnObject(created);
+        
+                // // 기존 오브젝트 업데이트
+                foreach (var updated in info.objects.update)
+                    ObjectUpdater.Instance.UpdateObject(updated);
+                
+                break;
+            case "magicValid":
+                MagicValidInfo magicValid = JsonUtility.FromJson<MagicValidInfo>(json);
+                //vaildCheck
+                if (magicValid.valid)
+                {
+                    Destroy(CardInputSender.inputRequestDict[magicValid.id]);
+                }
+                else
+                {
+                    Debug.Log("유효한 움직임이 아닙니다!");
+                }
+                CardInputSender.inputRequestDict.Remove(magicValid.id);
+                return;
+        }
+        
     }
 }
