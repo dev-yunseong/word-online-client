@@ -169,8 +169,8 @@ public class StompConnector : MonoBehaviour
          GameSceneUIController.Instance.UpdateMana(info.updatedMana);
         //
         // // 카드 추가
-        // foreach (string cardName in info.cards.added)
-        //     CardUI.Instance.AddCard(cardName);
+         foreach (string cardName in info.cards.added)
+             GameSceneUIController.Instance.AddCard(cardName);
         //
         // // 생성된 오브젝트 배치
         // foreach (var created in info.objects.create)
