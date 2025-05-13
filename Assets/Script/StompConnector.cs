@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Runtime.InteropServices;
+using Script.GameScene;
 
 public class StompConnector : MonoBehaviour
 {
@@ -173,11 +174,11 @@ public class StompConnector : MonoBehaviour
              GameSceneUIController.Instance.AddCard(cardName);
         //
         // // 생성된 오브젝트 배치
-        // foreach (var created in info.objects.create)
-        //     ObjectSpawner.Instance.Spawn(created);
-        //
+        foreach (var created in info.objects.create)
+            ObjectSpawner.Instance.SpawnObject(created);
+        
         // // 기존 오브젝트 업데이트
-        // foreach (var updated in info.objects.update)
-        //     ObjectUpdater.Instance.Update(updated);
+        foreach (var updated in info.objects.update)
+            ObjectUpdater.Instance.UpdateObject(updated);
     }
 }

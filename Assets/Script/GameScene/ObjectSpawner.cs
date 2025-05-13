@@ -1,0 +1,36 @@
+using Script.GameScene.Exception;
+using UnityEngine;
+
+namespace Script.GameScene
+{
+    public class ObjectSpawner : MonoBehaviour
+    {
+        public static ObjectSpawner Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+        
+        public void SpawnObject(CreatedObjectDto createdObjectDto)
+        {
+            Vector3 position = new Vector3(
+                createdObjectDto.x, 
+                createdObjectDto.y, 
+                0);
+            GameObject prefab = Resources.Load<GameObject>($"Prefabs/{createdObjectDto.prefabType}");
+            GameObject spawnedObject = Instantiate(prefab, position, Quaternion.identity);
+            ServedObject servedObject = spawnedObject.AddComponent<ServedObject>();
+            servedObject.id = createdObjectDto.id;
+
+            try
+            {
+                ObjectContainer.Instance.RegisterObject(servedObject);
+            } catch (DuplicatedException e)
+            {
+                Debug.LogError($"Failed to register object: {e.Message}");
+                Destroy(spawnedObject);
+            }
+        }
+    }
+}
