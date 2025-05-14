@@ -29,7 +29,21 @@ mergeInto(LibraryManager.library, {
 
     client.subscribe(topic, function (message) {
       console.log("Received message from", topic, ":", message.body);
-      SendMessage("StompConnector", callback, message.body);
+      let bodyStr = "";
+      
+        if (typeof message.body === "string") {
+          bodyStr = message.body;
+        } else if (typeof message.body === "object") {
+          try {
+            bodyStr = JSON.stringify(message.body);
+          } catch (e) {
+            console.warn("Failed to stringify message body:", e);
+            bodyStr = message.body.toString();
+          }
+        } else {
+          bodyStr = String(message.body);
+        }
+      SendMessage("StompConnector", callback, bodyStr);
     }, { id: subscriptionId });
   },
 
