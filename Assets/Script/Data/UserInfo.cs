@@ -9,6 +9,6 @@ public class UserInfo : MonoBehaviour
 
     private void Awake()
     {
-        userID = UserIDMaker.GetUserID();
+        userID = IDMaker.GetUserID();
     }
 }
