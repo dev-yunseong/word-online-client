@@ -1,7 +1,7 @@
 [System.Serializable]
 public class CreatedObjectDto
 {
-    public string id;
+    public int id;
     public Position position;
     public string type; // enum 대응 가능
 }

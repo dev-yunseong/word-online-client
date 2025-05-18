@@ -4,7 +4,7 @@ namespace Script.GameScene
 {
     public class ServedObject : MonoBehaviour
     {
-        public string id;
+        public int id;
 
         public void UpdateObject(UpdatedObjectDto updatedObjectDto)
         {
