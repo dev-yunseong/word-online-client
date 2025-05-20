@@ -8,7 +8,7 @@ namespace Script.GameScene
     {
         public static ObjectContainer Instance { get; private set; }
         
-        private Dictionary<string, ServedObject> objects = new Dictionary<string, ServedObject>();
+        private Dictionary<int, ServedObject> objects = new Dictionary<int, ServedObject>();
         
         private void Awake()
         {
@@ -17,7 +17,7 @@ namespace Script.GameScene
         
         public void RegisterObject(ServedObject obj)
         {
-            if (obj == null || string.IsNullOrEmpty(obj.id))
+            if (obj == null)
             {
                 throw new System.ArgumentNullException(nameof(obj), "Object or ID cannot be null or empty.");
             }
@@ -30,7 +30,20 @@ namespace Script.GameScene
             objects[obj.id] = obj;
         }
         
-        public ServedObject FindById(string id)
+        public void UnregisterObject(ServedObject obj)
+        {
+            if (obj == null)
+            {
+                throw new System.ArgumentNullException(nameof(obj), "Object or ID cannot be null or empty.");
+            }
+            
+            if (!objects.Remove(obj.id))
+            {
+                Debug.LogWarning($"Object with ID {obj.id} not found in container.");
+            }
+        }
+        
+        public ServedObject FindById(int id)
         {
             return objects.GetValueOrDefault(id, null);
         }

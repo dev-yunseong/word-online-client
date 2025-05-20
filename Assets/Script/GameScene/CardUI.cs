@@ -15,7 +15,7 @@ namespace Script.GameScene
         // 버튼에 연결해서 호출 가능
         public void OnCardClicked()
         {
-            GetComponent<CardInputSender>().TryUseCard("Dummy",gameObject);
+            GetComponent<CardInputSender>().TryUseCard(cardNameText.text,gameObject);
         }
     }
 }

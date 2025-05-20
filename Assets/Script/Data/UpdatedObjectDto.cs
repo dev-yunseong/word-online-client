@@ -1,7 +1,8 @@
 [System.Serializable]
 public class UpdatedObjectDto
 {
-    public string id;
+    public int id;
     public Position position;
     public int hp;
+    public string status;
 }
