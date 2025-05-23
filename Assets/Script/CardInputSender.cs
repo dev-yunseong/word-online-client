@@ -1,22 +1,37 @@
 using System.Collections.Generic;
 using Script.Data;
+using Script.GameScene;
 using UnityEngine;
 
 public class CardInputSender : MonoBehaviour
 {
-    public static Dictionary<int,GameObject> inputRequestDict = new Dictionary<int, GameObject>();
+    public static Dictionary<int,List<CardUI>> inputRequestDict = new Dictionary<int, List<CardUI>>();
+    private List<string> _currentCardNameList = new List<string>();
+    private List<CardUI> _currentCardList = new List<CardUI>();
     
-    public void TryUseCard(string cardName, GameObject cardObj)
+    public bool CanSelectField => _currentCardList.Count > 0;
+    
+    public void TryUseCard(CardUI cardObj)
     {
-        var selectedCards = new List<string> { cardName }; // 지금은 하나만 예시
-        var input = new CardUseInput(selectedCards);
+        AddCardList(cardObj);
+    }
+
+    public void SendInput(Vector2 pos) //whenFieldSelect
+    {
+        var input = new CardUseInput(_currentCardNameList, pos);
         string json = JsonUtility.ToJson(input);
         
         string destination = $"/app/game/input/{SceneContext.MatchInfo.sessionId}/{SceneContext.UserID}";
         StompConnector.Instance.SendMessageToServer(destination, json);
         
-        inputRequestDict.Add(input.id, cardObj) ;
-        
+        inputRequestDict.Add(input.id, _currentCardList) ;
+    }
+    
+    
+    public void AddCardList(CardUI card)
+    {
+        _currentCardNameList.Add(card.CardName);
+        _currentCardList.Add(card);
     }
     
 }
