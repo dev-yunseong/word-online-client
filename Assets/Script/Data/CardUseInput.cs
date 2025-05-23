@@ -14,6 +14,7 @@ namespace Script.Data
         public CardUseInput(List<string> selectedCards, Vector2 pos)
         {
             cards = selectedCards;
+            position = pos;
         }
     }
 
