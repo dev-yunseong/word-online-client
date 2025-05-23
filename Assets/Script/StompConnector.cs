@@ -216,7 +216,10 @@ public class StompConnector : MonoBehaviour
                 //vaildCheck
                 if (magicValid.valid)
                 {
-                    Destroy(CardInputSender.inputRequestDict[magicValid.id]);
+                    foreach (var gameObject in CardInputSender.inputRequestDict[magicValid.id])
+                    {
+                        Destroy(gameObject);
+                    }
                 }
                 else
                 {
