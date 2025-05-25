@@ -27,6 +27,8 @@ public class FieldSelector : MonoBehaviour
                 cardInputSender.SendInput(mouseWorldPos);
                 currentAimObj.SetActive(false);
             }
+        } else {
+            if (currentAimObj.activeSelf) currentAimObj.SetActive(false);
         }
         
 
