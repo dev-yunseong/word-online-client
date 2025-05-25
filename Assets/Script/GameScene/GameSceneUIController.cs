@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Script.GameScene;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameSceneUIController : MonoBehaviour
@@ -33,7 +34,8 @@ public class GameSceneUIController : MonoBehaviour
         leftUserIDText.text = SceneContext.MatchInfo.leftUserId;
         rightUserIDText.text = SceneContext.MatchInfo.rightUserId;
 #endif
-
+        AddCard("Fireball");
+        AddCard("Ice Spike");
     }
 
     public void UpdateMana(int mana)
