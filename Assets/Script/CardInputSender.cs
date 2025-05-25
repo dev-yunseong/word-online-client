@@ -18,7 +18,6 @@ public class CardInputSender : MonoBehaviour
 
     public void SendInput(Vector2 pos) //whenFieldSelect
     {
-        var input = new CardUseInput(_currentCardNameList, pos);
         var input = new CardUseInput(new List<string>(_currentCardNameList), pos);
         string json = JsonUtility.ToJson(input);
         
