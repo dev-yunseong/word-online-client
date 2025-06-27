@@ -18,13 +18,14 @@ public class CardInputSender : MonoBehaviour
 
     public void SendInput(Vector2 pos) //whenFieldSelect
     {
-        var input = new CardUseInput(_currentCardNameList, pos);
+        var input = new CardUseInput(new List<string>(_currentCardNameList), pos);
         string json = JsonUtility.ToJson(input);
         
         string destination = $"/app/game/input/{SceneContext.MatchInfo.sessionId}/{SceneContext.UserID}";
         StompConnector.Instance.SendMessageToServer(destination, json);
-        
-        inputRequestDict.Add(input.id, _currentCardList) ;
+        inputRequestDict.Add(input.id, new List<CardUI>(_currentCardList)) ;
+        _currentCardNameList.Clear();
+        _currentCardList.Clear();
     }
     
     

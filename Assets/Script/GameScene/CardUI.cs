@@ -17,7 +17,7 @@ namespace Script.GameScene
         
         public void OnCardClicked()
         {
-            GetComponent<CardInputSender>().TryUseCard(this);
+            FindObjectOfType<CardInputSender>().TryUseCard(this);
         }
     }
 }
