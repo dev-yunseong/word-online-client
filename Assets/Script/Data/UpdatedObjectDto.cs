@@ -5,4 +5,5 @@ public class UpdatedObjectDto
     public Position position;
     public int hp;
     public string status;
+    public string effect;
 }
