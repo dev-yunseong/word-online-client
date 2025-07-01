@@ -18,7 +18,6 @@ namespace Script.GameScene
             {
                 servedObject.UpdateObject(updatedObjectDto);
             }
-            
             // TODO - Add Logic for Animation, State, Effect Atc
         }
     }
