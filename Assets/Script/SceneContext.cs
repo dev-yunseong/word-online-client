@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Script.Data;
 using UnityEngine;
 
 public class SceneContext : MonoBehaviour
@@ -8,6 +6,19 @@ public class SceneContext : MonoBehaviour
     public static string UserID
     {
         get; private set;
+    }
+
+    private static User _user;
+
+    public static User User
+    {
+        get { return _user; }
+        set
+        {
+            Debug.Log("Setting User: " + value.nickname + ", ID: " + value.userID);
+            UserID = value.nickname + "_" + value.userID; 
+            _user = value;
+        }
     }
 
     public static MatchedInfoDto MatchInfo
@@ -23,6 +34,5 @@ public class SceneContext : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(this);
-        UserID = FindObjectOfType<UserInfo>().userID;
     }
 }
