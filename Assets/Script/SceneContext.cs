@@ -15,8 +15,8 @@ public class SceneContext : MonoBehaviour
         get { return _user; }
         set
         {
-            Debug.Log("Setting User: " + value.nickname + ", ID: " + value.userID);
-            UserID = value.nickname + "_" + value.userID; 
+            Debug.Log("Setting User: " + value.nickname + ", ID: " + value.id);
+            UserID = value.nickname + "_" + value.id; 
             _user = value;
         }
     }

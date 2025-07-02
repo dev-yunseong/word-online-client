@@ -16,5 +16,25 @@ mergeInto(LibraryManager.library, {
         SendMessage("KakaoLoginHelper", "OnKakaoLoginSuccess", "Success");
       }
     }, 500);
+  },
+  
+  GetUserInfo: function() {
+    fetch("http://localhost:8080/api/users/mine", {
+      method: "GET",
+      credentials: "include"
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.text();
+      }
+      throw new Error('Response was not ok');
+    })
+    .then(data => {
+      console.log(data);
+      SendMessage("KakaoLoginHelper", "OnKakaoUserInfoSuccess", data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   }
 });

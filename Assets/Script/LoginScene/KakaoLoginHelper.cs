@@ -18,12 +18,15 @@ public class KakaoLoginHelper: MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern void OpenKakaoLogin(string url);
+    
+    [DllImport("__Internal")]
+    private static extern void GetUserInfo();
 #endif
     
     public void OnKakaoLoginSuccess(string message)
     {
         Debug.Log("카카오 로그인 성공: " + message);
-        StartCoroutine(LoadUserAndLoadLobbyScene());
+        LoadUserAndLoadLobbyScene();
     }
     
     public void LoginWithKakao()
@@ -35,36 +38,30 @@ public class KakaoLoginHelper: MonoBehaviour
 #endif
     }
 
-    private IEnumerator LoadUserAndLoadLobbyScene()
+    private void LoadUserAndLoadLobbyScene()
     {
-        yield return GetUser(
-                () =>
-                {
-                    SceneManager.LoadScene("LobbyScene");
-                }
-            );
-        
+        GetUser(
+            () =>
+            {
+                SceneManager.LoadScene("LobbyScene");
+            }
+        );
     }
         
-    public IEnumerator GetUser(Action callback)
+    Action userInfoCallback;
+    public void GetUser(Action callback)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost:8080/api/users/mine"))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("Error: " + www.error);
-            }
-            else
-            {
-                string responseText = www.downloadHandler.text;
-                Debug.Log("Response: " + responseText);
-                
-                User user = JsonUtility.FromJson<User>(responseText);
-                SceneContext.User = user;
-                callback();
-            }
-        }
+        userInfoCallback = callback;
+#if UNITY_WEBGL && !UNITY_EDITOR
+        GetUserInfo();
+#endif
+    }
+    
+    public void OnKakaoUserInfoSuccess(string userInfoJson)
+    {
+        User user = JsonUtility.FromJson<User>(userInfoJson);
+        SceneContext.User = user;
+        userInfoCallback();
+        userInfoCallback = null;
     }
 }
