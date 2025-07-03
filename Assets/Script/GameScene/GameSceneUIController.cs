@@ -34,8 +34,6 @@ public class GameSceneUIController : MonoBehaviour
         leftUserIDText.text = SceneContext.MatchInfo.leftUserId;
         rightUserIDText.text = SceneContext.MatchInfo.rightUserId;
 #endif
-        AddCard("Fireball");
-        AddCard("Ice Spike");
     }
 
     public void UpdateMana(int mana)
