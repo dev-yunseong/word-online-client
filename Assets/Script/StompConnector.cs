@@ -196,6 +196,8 @@ public class StompConnector : MonoBehaviour
                 
                 // 마나 UI 업데이트
                 GameSceneUIController.Instance.UpdateMana(info.updatedMana);
+                // 플레이어 HP 업데이트 
+                GameSceneUIController.Instance.UpdateUserHps(info.leftPlayerHp, info.rightPlayerHp);
                 //
                 // // 카드 추가
                 foreach (string cardName in info.cards.added)

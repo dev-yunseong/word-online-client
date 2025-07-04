@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Script.GameScene;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameSceneUIController : MonoBehaviour
 {
@@ -13,6 +10,10 @@ public class GameSceneUIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI leftUserIDText;
     [SerializeField] private TextMeshProUGUI rightUserIDText;
     [SerializeField] private TextMeshProUGUI manaText;
+    [SerializeField] private Slider manaSlider;
+    
+    [SerializeField] private Slider leftUserHpSlider;
+    [SerializeField] private Slider rightUserHpSlider;
     
     [SerializeField] private CardUI cardUIPrefab;
     [SerializeField] private GameObject lowerBar;
@@ -35,10 +36,20 @@ public class GameSceneUIController : MonoBehaviour
         rightUserIDText.text = SceneContext.MatchInfo.rightUserId;
 #endif
     }
+    
+    public void UpdateUserHps(int leftUserHp, int rightUserHp)
+    {
+        leftUserHpSlider.value = leftUserHp;
+        rightUserHpSlider.value = rightUserHp;
+
+        leftUserIDText.text = $"{SceneContext.MatchInfo.leftUserId}\n HP: {leftUserHp}";
+        rightUserIDText.text = $"{SceneContext.MatchInfo.rightUserId}\n HP: {rightUserHp}";
+    }
 
     public void UpdateMana(int mana)
     {
         manaText.text = mana.ToString();
+        manaSlider.value = mana;
     }
 
     public void AddCard(string cardname)
