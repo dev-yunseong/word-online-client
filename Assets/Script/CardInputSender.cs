@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Script.Data;
 using Script.GameScene;
@@ -19,7 +20,25 @@ public class CardInputSender : MonoBehaviour
             _currentCardList.Remove(cardObj);
         }
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1) && CanSelectField)
+        {
+            CancelAll();
+        }
+    }
+
+    private void CancelAll()
+    {
+        foreach (var card in _currentCardList)
+        {
+            card.SetCardActive(false);
+        }
+        _currentCardList.Clear();
+        _currentCardNameList.Clear();
+    }
+
     public void TryUseCard(CardUI cardObj)
     {
         AddCardList(cardObj);
