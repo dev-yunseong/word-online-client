@@ -38,7 +38,7 @@ public class KakaoLoginHelper: MonoBehaviour
 #endif
     }
 
-    private void LoadUserAndLoadLobbyScene()
+    public void LoadUserAndLoadLobbyScene()
     {
         GetUser(
             () =>
