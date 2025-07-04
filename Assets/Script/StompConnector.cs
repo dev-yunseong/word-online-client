@@ -58,8 +58,6 @@ public class StompConnector : MonoBehaviour
             SceneContext.UserID
         );
     }
-
-
     
     // 메시지 수신 처리
     public void OnMessageReceived(string message)
@@ -80,7 +78,7 @@ public class StompConnector : MonoBehaviour
                 "frame-sub");
         }
     }
-
+    
     // 연결 종료 처리
     public void OnDisconnected(string message)
     {
