@@ -2,6 +2,7 @@
 public class CreatedObjectDto
 {
     public int id;
+    public string master;
     public Position position;
     public string type; // enum 대응 가능
 }

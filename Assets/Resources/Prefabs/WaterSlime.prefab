@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5662721794373060507}
   - component: {fileID: 8774719626561926390}
+  - component: {fileID: 6478209283604839819}
   m_Layer: 0
   m_Name: WaterSlime
   m_TagString: Untagged
@@ -84,3 +85,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6478209283604839819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5255929560540422814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9482239f4c014f10aeca01a34a0235a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: f27551c071f00463b87b01b0cfc2a269, type: 3}
+  - {fileID: 21300000, guid: 05862dfeca01a4d499beb745601f75cf, type: 3}
+  - {fileID: 21300000, guid: 9f9984975a2be44439d715ed9c28c8ff, type: 3}
+  - {fileID: 21300000, guid: 05862dfeca01a4d499beb745601f75cf, type: 3}

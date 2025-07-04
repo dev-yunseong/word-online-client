@@ -19,10 +19,10 @@ namespace Script.GameScene
                 createdObjectDto.position.y, 
                 0);
             GameObject prefab = Resources.Load<GameObject>($"Prefabs/{createdObjectDto.type}");
-            GameObject spawnedObject = Instantiate(prefab, position, Quaternion.identity);
+            GameObject spawnedObject = Instantiate(prefab, position, prefab.transform.rotation);
             ServedObject servedObject = spawnedObject.AddComponent<ServedObject>();
+            servedObject.SetMaster(createdObjectDto.master);
             servedObject.id = createdObjectDto.id;
-
             try
             {
                 ObjectContainer.Instance.RegisterObject(servedObject);

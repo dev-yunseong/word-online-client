@@ -6,6 +6,16 @@ namespace Script.GameScene
     {
         public int id;
         private GameObject _effectInstance = null;
+        private string master;
+        
+        public void SetMaster(string master)
+        {
+            this.master = master;
+            if (master.Equals("RightPlayer"))
+            {
+                gameObject.transform.Rotate(0, 180, 0);
+            }
+        }
 
         public void UpdateObject(UpdatedObjectDto updatedObjectDto)
         {

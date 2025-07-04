@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5922954186981665861}
   - component: {fileID: 2473495870254008252}
+  - component: {fileID: 2231629592795233624}
   m_Layer: 0
   m_Name: RockSlime
   m_TagString: Untagged
@@ -84,3 +85,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2231629592795233624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794361822599105745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9482239f4c014f10aeca01a34a0235a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 882b1be015b144349a51c6da1338bd7d, type: 3}
+  - {fileID: 21300000, guid: 5de5c1f62414746988b706bb99487e8d, type: 3}
+  - {fileID: 21300000, guid: cb8fbce9a48a84cc5be5b7fef40b2069, type: 3}
+  - {fileID: 21300000, guid: 5de5c1f62414746988b706bb99487e8d, type: 3}
