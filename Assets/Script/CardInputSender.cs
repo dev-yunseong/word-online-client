@@ -11,6 +11,15 @@ public class CardInputSender : MonoBehaviour
     
     public bool CanSelectField => _currentCardList.Count > 0;
     
+    public void CancelUseCard(CardUI cardObj)
+    {
+        if (_currentCardNameList.Contains(cardObj.CardName))
+        {
+            _currentCardNameList.Remove(cardObj.CardName);
+            _currentCardList.Remove(cardObj);
+        }
+    }
+    
     public void TryUseCard(CardUI cardObj)
     {
         AddCardList(cardObj);
@@ -34,5 +43,4 @@ public class CardInputSender : MonoBehaviour
         _currentCardNameList.Add(card.CardName);
         _currentCardList.Add(card);
     }
-    
 }

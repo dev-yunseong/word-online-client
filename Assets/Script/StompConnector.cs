@@ -222,6 +222,10 @@ public class StompConnector : MonoBehaviour
                 }
                 else
                 {
+                    foreach (var cardUI in CardInputSender.inputRequestDict[magicValid.id])
+                    {
+                        cardUI.SetCardActive(false);
+                    }
                     Debug.Log("유효한 움직임이 아닙니다!");
                 }
                 CardInputSender.inputRequestDict.Remove(magicValid.id);
