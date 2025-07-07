@@ -21,6 +21,18 @@ public class SceneContext : MonoBehaviour
         }
     }
 
+    public static string Me
+    {
+        get
+        {
+            if (UserID.Equals(MatchInfo.leftUserId))
+                return "LeftPlayer";
+            else if (UserID.Equals(MatchInfo.rightUserId))
+                return "RightPlayer";
+            return "None";
+        }
+    }
+
     public static MatchedInfoDto MatchInfo
     {
         get; set;

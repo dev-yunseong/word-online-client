@@ -196,6 +196,8 @@ public class StompConnector : MonoBehaviour
                 
                 // 마나 UI 업데이트
                 GameSceneUIController.Instance.UpdateMana(info.updatedMana);
+                // 플레이어 HP 업데이트 
+                GameSceneUIController.Instance.UpdateUserHps(info.leftPlayerHp, info.rightPlayerHp);
                 //
                 // // 카드 추가
                 foreach (string cardName in info.cards.added)
@@ -222,6 +224,10 @@ public class StompConnector : MonoBehaviour
                 }
                 else
                 {
+                    foreach (var cardUI in CardInputSender.inputRequestDict[magicValid.id])
+                    {
+                        cardUI.SetCardActive(false);
+                    }
                     Debug.Log("유효한 움직임이 아닙니다!");
                 }
                 CardInputSender.inputRequestDict.Remove(magicValid.id);

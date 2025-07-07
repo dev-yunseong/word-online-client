@@ -6,6 +6,22 @@ namespace Script.GameScene
     {
         public int id;
         private GameObject _effectInstance = null;
+        private string master;
+        
+        public void SetMaster(string master)
+        {
+            this.master = master;
+            if (!SceneContext.Me.Equals(master))
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0.5f, 0.5f, 1f);
+            }
+            
+            if (master.Equals("RightPlayer"))
+            {
+                // gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                gameObject.transform.Rotate(0, 180, 0);
+            }
+        }
 
         public void UpdateObject(UpdatedObjectDto updatedObjectDto)
         {
