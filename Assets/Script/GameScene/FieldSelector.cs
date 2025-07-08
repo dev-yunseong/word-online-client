@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Script.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,21 +10,59 @@ public class FieldSelector : MonoBehaviour
 {
     CardInputSender cardInputSender;
     private GameObject currentAimObj;
+    private GameObject currentRangeObj;
+    private GameObject currentSkillIndicator;
     [SerializeField] private GameObject aimObject;
+    [SerializeField] private GameObject rangeObject;
+    [SerializeField] private GameObject lineSkillIndicator;
+    [SerializeField] private GameObject circleSkillIndicator;
     private void Start()
     {
         cardInputSender = FindObjectOfType<CardInputSender>();
         currentAimObj = Instantiate(aimObject);
+        currentRangeObj = Instantiate(rangeObject);
+        currentSkillIndicator = Instantiate(circleSkillIndicator);
     }
 
     void Update()
     {
         if (cardInputSender.CanSelectField)
         {
-            if(!currentAimObj.activeSelf) currentAimObj.SetActive(true);
+            if (!currentAimObj.activeSelf)
+            {
+                currentAimObj.SetActive(true);
+            }
+            currentRangeObj.SetActive(true);
+            currentRangeObj.transform.localScale = Vector3.one * (40f * LocalMagicData.GetMagicData(cardInputSender.GetMagicName()).range);
+            if (LocalMagicData.GetMagicData(cardInputSender.GetMagicName()).name.Equals("Shoot"))
+            {
+                if (currentSkillIndicator.name.Contains("circle"))
+                {
+                    Destroy(currentSkillIndicator);
+                    currentSkillIndicator = Instantiate(lineSkillIndicator);
+                }        
+            }
+            else
+            {
+                if (currentSkillIndicator.name.Contains("line"))
+                {
+                    Destroy(currentSkillIndicator);
+                    currentSkillIndicator = Instantiate(circleSkillIndicator);
+                }
+            }
+            if (SceneContext.Me.Equals("RightPlayer"))
+            {
+                currentRangeObj.transform.position = new Vector3(17, 5, 0);
+            }
+            else
+            {
+                currentRangeObj.transform.position = new Vector3(1, 5, 0);
+            }            
             
             Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             currentAimObj.transform.position = mouseWorldPos;
+
+
 
             if (EventSystem.current.IsPointerOverGameObject()) return;
             
@@ -31,9 +70,16 @@ public class FieldSelector : MonoBehaviour
             {
                 cardInputSender.SendInput(mouseWorldPos);
                 currentAimObj.SetActive(false);
+                currentRangeObj.SetActive(false);
+                currentSkillIndicator.SetActive(false);
             }
         } else {
-            if (currentAimObj.activeSelf) currentAimObj.SetActive(false);
+            if (currentAimObj.activeSelf)
+            {
+                currentAimObj.SetActive(false);
+                currentRangeObj.SetActive(false);
+                currentSkillIndicator.SetActive(false);
+            }
         }
         
 

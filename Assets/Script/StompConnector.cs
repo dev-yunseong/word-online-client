@@ -228,6 +228,7 @@ public class StompConnector : MonoBehaviour
                     {
                         cardUI.SetCardActive(false);
                     }
+                    GameSceneUIController.Instance.Announce("유효한 움직임이 아닙니다!");
                     Debug.Log("유효한 움직임이 아닙니다!");
                 }
                 CardInputSender.inputRequestDict.Remove(magicValid.id);

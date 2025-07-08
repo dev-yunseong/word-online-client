@@ -29,6 +29,11 @@ public class CardInputSender : MonoBehaviour
         }
     }
 
+    public string GetMagicName()
+    {
+        return _currentCardNameList.Find(cardName => cardName.Contains("Shoot") || cardName.Contains("Spawn") || cardName.Contains("Summon") || cardName.Contains("Explode"));
+    }
+    
     private void CancelAll()
     {
         foreach (var card in _currentCardList)

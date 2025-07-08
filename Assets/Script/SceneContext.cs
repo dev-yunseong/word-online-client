@@ -42,7 +42,7 @@ public class SceneContext : MonoBehaviour
     {
         get; set;
     }
-
+    
     private void Start()
     {
         DontDestroyOnLoad(this);
