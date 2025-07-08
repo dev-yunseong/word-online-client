@@ -1,3 +1,4 @@
+using System.Collections;
 using Script.GameScene;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,23 @@ public class GameSceneUIController : MonoBehaviour
     [SerializeField] private CardUI cardUIPrefab;
     [SerializeField] private GameObject lowerBar;
 
+    [SerializeField] private GameObject textObject;
+    [SerializeField] private TextMeshProUGUI textSystemMsg;
+
+
+    public void Announce(string text)
+    {
+        textSystemMsg.text = text;
+        textObject.SetActive(true);
+        StartCoroutine(SetTimer(3f));
+    }
+
+    public IEnumerator SetTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        textObject.SetActive(false);
+    }
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
