@@ -40,7 +40,11 @@ public class FieldSelector : MonoBehaviour
                 {
                     Destroy(currentSkillIndicator);
                     currentSkillIndicator = Instantiate(lineSkillIndicator);
-                }        
+                }
+                else
+                {
+                    currentSkillIndicator.SetActive(true);
+                }
             }
             else
             {
@@ -48,6 +52,10 @@ public class FieldSelector : MonoBehaviour
                 {
                     Destroy(currentSkillIndicator);
                     currentSkillIndicator = Instantiate(circleSkillIndicator);
+                }
+                else
+                {
+                    currentSkillIndicator.SetActive(true);
                 }
             }
             if (SceneContext.Me.Equals("RightPlayer"))
