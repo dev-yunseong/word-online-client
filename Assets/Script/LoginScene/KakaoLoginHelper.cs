@@ -51,6 +51,7 @@ public class KakaoLoginHelper: MonoBehaviour
     Action userInfoCallback;
     public void GetUser(Action callback)
     {
+        Debug.Log("requesting user info from Kakao");
         userInfoCallback = callback;
 #if UNITY_WEBGL && !UNITY_EDITOR
         GetUserInfo();
@@ -59,6 +60,7 @@ public class KakaoLoginHelper: MonoBehaviour
     
     public void OnKakaoUserInfoSuccess(string userInfoJson)
     {
+        Debug.Log("received user info: " + userInfoJson);
         User user = JsonUtility.FromJson<User>(userInfoJson);
         SceneContext.User = user;
         userInfoCallback();

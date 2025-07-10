@@ -1,8 +1,10 @@
+using Script.Data;
+
 [System.Serializable]
 public class MatchedInfoDto
 {
     public string message;
-    public string leftUserId;
-    public string rightUserId;
+    public User leftUser;
+    public User rightUser;
     public string sessionId;
 }
