@@ -26,7 +26,7 @@ public class SceneContext : MonoBehaviour
         {
             if (UserID == MatchInfo.leftUser.id)
                 return "LeftPlayer";
-            else if (UserID ==MatchInfo.rightUser.id)
+            else if (UserID == MatchInfo.rightUser.id)
                 return "RightPlayer";
             return "None";
         }
