@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class SceneContext : MonoBehaviour
 {
-    public static string UserID
+    public static long UserID
     {
-        get; private set;
+        get => _user.id;
     }
 
     private static User _user;
@@ -16,7 +16,6 @@ public class SceneContext : MonoBehaviour
         set
         {
             Debug.Log("Setting User: " + value.nickname + ", ID: " + value.id);
-            UserID = value.nickname + "_" + value.id; 
             _user = value;
         }
     }
@@ -25,9 +24,9 @@ public class SceneContext : MonoBehaviour
     {
         get
         {
-            if (UserID.Equals(MatchInfo.leftUserId))
+            if (UserID == MatchInfo.leftUser.id)
                 return "LeftPlayer";
-            else if (UserID.Equals(MatchInfo.rightUserId))
+            else if (UserID == MatchInfo.rightUser.id)
                 return "RightPlayer";
             return "None";
         }

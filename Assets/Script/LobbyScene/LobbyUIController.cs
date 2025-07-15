@@ -6,6 +6,7 @@ public class LobbyUIController : MonoBehaviour
 
     private void Start()
     {
-        lobbyUserNameUI.SetUserID(SceneContext.UserID);
+        Debug.Log("LobbyUIController Start");
+        lobbyUserNameUI.SetUserName(SceneContext.User.nickname);
     }
 }
