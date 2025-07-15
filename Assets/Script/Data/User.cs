@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine.Serialization;
 
 namespace Script.Data
@@ -9,5 +10,6 @@ namespace Script.Data
         public string id;
         public string profileImageUrl;
         public string email;
+        public List<Deck> deckList;
     }
 }
