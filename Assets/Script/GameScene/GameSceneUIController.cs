@@ -50,8 +50,8 @@ public class GameSceneUIController : MonoBehaviour
     private void Start()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
-        leftUserIDText.text = SceneContext.MatchInfo.leftUser.nickname;
-        rightUserIDText.text = SceneContext.MatchInfo.rightUser.nickname;
+        leftUserIDText.text = SceneContext.MatchInfo.leftUser.name;
+        rightUserIDText.text = SceneContext.MatchInfo.rightUser.name;
 #endif
     }
     
