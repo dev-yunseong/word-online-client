@@ -21,7 +21,7 @@ public class LoginButton : MonoBehaviour
     {
         string jsonData = JsonUtility.ToJson(loginRequestDto);
         
-        using (UnityWebRequest webRequest = new UnityWebRequest("http://localhost:8080/api/users/login", "POST"))
+        using (UnityWebRequest webRequest = new UnityWebRequest(SceneContext.ServerUrl + "/api/users/login", "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
