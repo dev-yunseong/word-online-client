@@ -22,7 +22,7 @@ public class RegisterButton : MonoBehaviour
     {
         string jsonData = JsonUtility.ToJson(registerRequestDto);
         
-        using (UnityWebRequest webRequest = new UnityWebRequest("http://localhost:8080/api/users", "POST"))
+        using (UnityWebRequest webRequest = new UnityWebRequest(SceneContext.ServerUrl + "/api/users", "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
