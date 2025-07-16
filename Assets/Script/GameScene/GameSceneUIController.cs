@@ -60,8 +60,8 @@ public class GameSceneUIController : MonoBehaviour
         leftUserHpSlider.value = leftUserHp;
         rightUserHpSlider.value = rightUserHp;
 
-        leftUserIDText.text = $"{SceneContext.MatchInfo.leftUser.nickname}\n HP: {leftUserHp}";
-        rightUserIDText.text = $"{SceneContext.MatchInfo.rightUser.nickname}\n HP: {rightUserHp}";
+        leftUserIDText.text = $"{SceneContext.MatchInfo.leftUser.name}\n HP: {leftUserHp}";
+        rightUserIDText.text = $"{SceneContext.MatchInfo.rightUser.name}\n HP: {rightUserHp}";
     }
 
     public void UpdateMana(int mana)

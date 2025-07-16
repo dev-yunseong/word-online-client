@@ -4,18 +4,21 @@ mergeInto(LibraryManager.library, {
   OpenKakaoLogin: function(urlPtr) {
     var url = UTF8ToString(urlPtr);
     console.log("Opening Kakao login at:", url);
-    popup = window.open(url, "_blank", "width=600,height=700");
     
-    const timer = setInterval(() => {
-      if (popup.closed) {
-        clearInterval(timer);
-        console.log("팝업이 닫혔어요!");
-        popup.close();
-        popup = null;
-        
-        SendMessage("KakaoLoginHelper", "OnKakaoLoginSuccess", "Success");
+    window.addEventListener("message", (event) => { 
+      const data = event.data;
+        console.log("JWT 토큰 줄라고 옴");
+        console.log(event.origin);
+      if (event.origin !== 'http://localhost:8080') return; 
+      if (data.token) {
+        console.log("JWT 토큰 받음:", data.token);
+    
+        SendMessage("KakaoLoginHelper", "OnKakaoLoginSuccess", data.token);
       }
-    }, 500);
+    });
+    
+    popup = window.open(url, "_blank", "width=600,height=700");
+    popup.postMessage("SET_OPENER", "http://localhost:8080");
   },
   
   GetUserInfo: function() {

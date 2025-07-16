@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class LobbyUIController : MonoBehaviour
@@ -7,6 +8,14 @@ public class LobbyUIController : MonoBehaviour
     private void Start()
     {
         Debug.Log("LobbyUIController Start");
-        lobbyUserNameUI.SetUserName(SceneContext.User.nickname);
+
+        StartCoroutine(LoadUserInfo());
+    }
+    
+    private IEnumerator LoadUserInfo()
+    {
+        yield return UserInfoGetter.GetUserInfo();
+        
+        lobbyUserNameUI.SetUserName(SceneContext.User.name);
     }
 }
