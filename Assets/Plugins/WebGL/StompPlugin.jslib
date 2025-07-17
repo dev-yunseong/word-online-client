@@ -3,15 +3,18 @@ var client = null;
 
 mergeInto(LibraryManager.library, {
     // Function to connect to STOMP server
-  ConnectStompSocket: function (urlPtr) {
+  ConnectStompSocket: function (urlPtr, tokenPtr) {
     const url = UTF8ToString(urlPtr);
+    const token = UTF8ToString(tokenPtr);
 
     console.log("Connecting to STOMP at:", url);
 
     const socket = new WebSocket(url);
     client = Stomp.over(socket);
 
-    client.connect({}, function (frame) {
+    client.connect({
+        Authorization: `Bearer ${token}`
+    }, function (frame) {
       console.log("Connected:", frame);
       SendMessage("StompConnector", "OnConnected", JSON.stringify(frame.headers));
     }, function (error) {
@@ -70,5 +73,4 @@ mergeInto(LibraryManager.library, {
         });
         }
     }
-
 });

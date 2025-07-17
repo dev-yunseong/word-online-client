@@ -3,6 +3,14 @@ using UnityEngine;
 
 public class SceneContext : MonoBehaviour
 {
+    
+    public static string JwtToken
+    {
+        get; set;
+    }
+    
+    public static string ServerUrl = "http://localhost:8080";
+    
     public static long UserID
     {
         get => _user.id;
@@ -15,7 +23,7 @@ public class SceneContext : MonoBehaviour
         get { return _user; }
         set
         {
-            Debug.Log("Setting User: " + value.nickname + ", ID: " + value.id);
+            Debug.Log("Setting User: " + value.name + ", ID: " + value.id);
             _user = value;
         }
     }

@@ -25,7 +25,7 @@ public class StompConnector : MonoBehaviour
     // WebGL에서 JavaScript 함수 호출
     #if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
-    private static extern void ConnectStompSocket(string url);
+    private static extern void ConnectStompSocket(string url, string jwtToken);
 
     [DllImport("__Internal")]
     private static extern void SubscribeStomp(string topic, string callback, string subscriptionId);
@@ -109,7 +109,7 @@ public class StompConnector : MonoBehaviour
         if (!isConnected)
         {
             #if UNITY_WEBGL && !UNITY_EDITOR
-            ConnectStompSocket(url);
+            ConnectStompSocket(url, SceneContext.JwtToken);
             #endif
         }
         else
