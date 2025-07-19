@@ -50,8 +50,8 @@ public class GameSceneUIController : MonoBehaviour
     private void Start()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
-        leftUserIDText.text = SceneContext.MatchInfo.leftUserId;
-        rightUserIDText.text = SceneContext.MatchInfo.rightUserId;
+        leftUserIDText.text = SceneContext.MatchInfo.leftUser.name;
+        rightUserIDText.text = SceneContext.MatchInfo.rightUser.name;
 #endif
     }
     
@@ -60,8 +60,8 @@ public class GameSceneUIController : MonoBehaviour
         leftUserHpSlider.value = leftUserHp;
         rightUserHpSlider.value = rightUserHp;
 
-        leftUserIDText.text = $"{SceneContext.MatchInfo.leftUserId}\n HP: {leftUserHp}";
-        rightUserIDText.text = $"{SceneContext.MatchInfo.rightUserId}\n HP: {rightUserHp}";
+        leftUserIDText.text = $"{SceneContext.MatchInfo.leftUser.name}\n HP: {leftUserHp}";
+        rightUserIDText.text = $"{SceneContext.MatchInfo.rightUser.name}\n HP: {rightUserHp}";
     }
 
     public void UpdateMana(int mana)

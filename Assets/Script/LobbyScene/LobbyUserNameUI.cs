@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class LobbyUserNameUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI userIDText;
+    [SerializeField] TextMeshProUGUI userNameText;
 
-    public void SetUserID(string userID)
+    public void SetUserName(string userName)
     {
-        this.userIDText.text = "Name : " + userID;
+        Debug.Log($"Name : {userName}");
+        this.userNameText.SetText($"Name : {userName} ");
+        Debug.Log("Set UserName");
     }
 }

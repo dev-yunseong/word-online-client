@@ -3,9 +3,17 @@ using UnityEngine;
 
 public class SceneContext : MonoBehaviour
 {
-    public static string UserID
+    
+    public static string JwtToken
     {
-        get; private set;
+        get; set;
+    }
+    
+    public static string ServerUrl = "http://localhost:8080";
+    
+    public static long UserID
+    {
+        get => _user.id;
     }
 
     private static User _user;
@@ -15,8 +23,7 @@ public class SceneContext : MonoBehaviour
         get { return _user; }
         set
         {
-            Debug.Log("Setting User: " + value.nickname + ", ID: " + value.id);
-            UserID = value.nickname + "_" + value.id; 
+            Debug.Log("Setting User: " + value.name + ", ID: " + value.id);
             _user = value;
         }
     }
@@ -25,9 +32,9 @@ public class SceneContext : MonoBehaviour
     {
         get
         {
-            if (UserID.Equals(MatchInfo.leftUserId))
+            if (UserID == MatchInfo.leftUser.id)
                 return "LeftPlayer";
-            else if (UserID.Equals(MatchInfo.rightUserId))
+            else if (UserID == MatchInfo.rightUser.id)
                 return "RightPlayer";
             return "None";
         }

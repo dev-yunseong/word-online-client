@@ -25,7 +25,7 @@ public class StompConnector : MonoBehaviour
     // WebGL에서 JavaScript 함수 호출
     #if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
-    private static extern void ConnectStompSocket(string url);
+    private static extern void ConnectStompSocket(string url, string jwtToken);
 
     [DllImport("__Internal")]
     private static extern void SubscribeStomp(string topic, string callback, string subscriptionId);
@@ -55,7 +55,7 @@ public class StompConnector : MonoBehaviour
         // 예: 서버로 JSON 메시지 전송
         SendMessageToServer(
             "/app/game/match/queue",
-            SceneContext.UserID
+            SceneContext.UserID.ToString()
         );
     }
     
@@ -76,6 +76,17 @@ public class StompConnector : MonoBehaviour
             SubscribeToTopic($"/game/{SceneContext.MatchInfo.sessionId}/frameInfos/{SceneContext.UserID}",
                 "OnFrameInfoReceived",
                 "frame-sub");
+        }
+        else
+        {
+            if (message.Contains("Successfully"))
+            {
+                MatchingStatusTextUI.SetMatchingStatusText("매칭 대기 중...");
+            } else if (message.Contains("Failed"))
+            {
+                MatchingStatusTextUI.SetMatchingStatusText("매칭 실패! 다시 시도해주세요.");
+                UnsubscribeFromTopic("match-sub");
+            }
         }
     }
     
@@ -98,12 +109,13 @@ public class StompConnector : MonoBehaviour
         if (!isConnected)
         {
             #if UNITY_WEBGL && !UNITY_EDITOR
-            ConnectStompSocket(url);
+            ConnectStompSocket(url, SceneContext.JwtToken);
             #endif
         }
         else
         {
             Debug.LogWarning("이미 연결되어 있습니다.");
+            OnConnected("이미 연결됨");
         }
     }
 
@@ -235,7 +247,7 @@ public class StompConnector : MonoBehaviour
                 return;
             case "result":
                 ResultInfo result = JsonUtility.FromJson<ResultInfo>(json);
-                if (SceneContext.UserID == SceneContext.MatchInfo.leftUserId)
+                if (SceneContext.UserID == SceneContext.MatchInfo.leftUser.id)
                 {
                     SceneContext.MatchResult = result.leftPlayer;
                 }

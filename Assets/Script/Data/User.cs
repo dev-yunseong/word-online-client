@@ -1,15 +1,10 @@
-using System.Collections.Generic;
-using UnityEngine.Serialization;
-
 namespace Script.Data
 {
     [System.Serializable]
     public class User
     {
-        public string nickname;
-        public string id;
-        public string profileImageUrl;
+        public string name;
+        public long id;
         public string email;
-        public List<Deck> deckList;
     }
 }

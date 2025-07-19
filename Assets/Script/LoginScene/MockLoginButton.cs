@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MockLoginButton : MonoBehaviour
 {
-    [SerializeField] private KakaoLoginHelper kakaoLoginHelper;
-        
     public void OnClickButton()
     {
-        kakaoLoginHelper.LoadUserAndLoadLobbyScene();
+        SceneManager.LoadScene("LobbyScene");
     }
 }
