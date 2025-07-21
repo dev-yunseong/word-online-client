@@ -24,6 +24,11 @@ namespace Script.Data
             new MagicData("Summon",15,1/3f),
             new MagicData("Spawn",15,1/3f),
             new MagicData("Explode",40,1/2f),
+            new MagicData("Fire",0,1/4f),
+            new MagicData("Water",0,1/4f),
+            new MagicData("Leaf",0,1/4f),
+            new MagicData("Lightning",0,1/4f),
+            new MagicData("Rock",0,1/4f),
         };
 
         public static MagicData GetMagicData(string name)
