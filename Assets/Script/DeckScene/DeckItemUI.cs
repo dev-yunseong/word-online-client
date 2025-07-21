@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CardItemUI : MonoBehaviour
+public class DeckItemUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI cardNameText;
-    [SerializeField] private TextMeshProUGUI cardCountText;
 
-    public void Init(string cName, int count)
+    public void Init(string cName)
     {
         cardNameText.text = cName;
-        cardCountText.text = $" X {count.ToString()}" ;
     }
 }

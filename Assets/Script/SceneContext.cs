@@ -49,6 +49,14 @@ public class SceneContext : MonoBehaviour
     {
         get; set;
     }
+    public static string SelectedDeck
+    {
+        get; set;
+    }
+    public static string OwnedCards
+    {
+        get; set;
+    }
     
     private void Start()
     {
