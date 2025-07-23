@@ -8,7 +8,7 @@ public class PingSender : MonoBehaviour
     
     private StompConnector stompConnector;
     private string destination;
-    string pingMessage;
+    private string pingMessage;
 
     [Serializable]
     class PingDto
