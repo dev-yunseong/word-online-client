@@ -28,6 +28,11 @@ public class PingSender : MonoBehaviour
         StartCoroutine(PingCoroutine());
     }
     
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+    
     private IEnumerator PingCoroutine()
     {
         while (true)
