@@ -6,6 +6,10 @@ namespace Script.GameScene
     public class ObjectSpawner : MonoBehaviour
     {
         public static ObjectSpawner Instance { get; private set; }
+        
+        [SerializeField] private PlayerAnimationTrigger leftPlayerAnimationTrigger;
+        [SerializeField] private PlayerAnimationTrigger rightPlayerAnimationTrigger;
+        
 
         private void Awake()
         {
@@ -22,6 +26,20 @@ namespace Script.GameScene
             GameObject spawnedObject = Instantiate(prefab, position, prefab.transform.rotation);
             ServedObject servedObject = spawnedObject.AddComponent<ServedObject>();
             servedObject.SetMaster(createdObjectDto.master);
+
+            switch (createdObjectDto.master)
+            {
+                case "RightPlayer":
+                    rightPlayerAnimationTrigger.UseMagic();   
+                    break;
+                case "LeftPlayer":
+                    leftPlayerAnimationTrigger.UseMagic();
+                    break;
+                default:
+                    Debug.LogWarning($"Unknown master: {createdObjectDto.master}");
+                    break;
+            }
+            
             servedObject.id = createdObjectDto.id;
             try
             {
