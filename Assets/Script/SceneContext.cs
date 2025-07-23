@@ -45,7 +45,7 @@ public class SceneContext : MonoBehaviour
         get; set;
     }
 
-    public static string MatchResult
+    public static ResultInfo MatchResult
     {
         get; set;
     }

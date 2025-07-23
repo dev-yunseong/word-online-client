@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Script.GameScene;
 using TMPro;
 using UnityEngine;
 
 public class ResultSceneUIController : MonoBehaviour
 {
     public static ResultSceneUIController Instance;
+    private ResultInfo resultInfo;
 
     [SerializeField] TextMeshProUGUI resultText;
     private void Awake()
@@ -23,7 +20,30 @@ public class ResultSceneUIController : MonoBehaviour
 
     private void Start()
     {
-        SetResultText(SceneContext.MatchResult);
+        resultInfo = SceneContext.MatchResult;
+        SceneContext.MatchResult = null;
+        
+        if (resultInfo == null)
+        {
+            Debug.LogError("ResultInfo is null. Cannot display result.");
+            SetResultText("No result available.");
+            return;
+        }
+        
+        if (SceneContext.Me == "LeftPlayer")
+        {
+            SetResultText($"{resultInfo.leftPlayer}\n" +
+                          $"MMR: {resultInfo.lastLeftPlayerMmr} -> {resultInfo.newLeftPlayerMmr}");
+        }
+        else if (SceneContext.Me == "RightPlayer")
+        {
+            SetResultText($"{resultInfo.rightPlayer}\n" +
+                          $"MMR: {resultInfo.lastRightPlayerMmr} -> {resultInfo.newRightPlayerMmr}");
+        }
+        else
+        {
+            SetResultText("You are not part of this match.");
+        }
     }
 
     private void SetResultText(string text)

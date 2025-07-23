@@ -247,16 +247,8 @@ public class StompConnector : MonoBehaviour
                 return;
             case "result":
                 ResultInfo result = JsonUtility.FromJson<ResultInfo>(json);
-                if (SceneContext.UserID == SceneContext.MatchInfo.leftUser.id)
-                {
-                    SceneContext.MatchResult = result.leftPlayer;
-                }
-                else
-                {
-                    SceneContext.MatchResult = result.rightPlayer;
-                }
+                SceneContext.MatchResult = result;
                 SceneManager.LoadScene("ResultScene");
-
                 break;
         }
         
