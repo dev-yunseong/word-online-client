@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Script.GameScene;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +9,7 @@ public class ServedObjectHpBar : MonoBehaviour
     
     private void Awake()
     {
-        slider = GetComponent<Slider>();
+        slider = GetComponentInChildren<Slider>();
     }
     
     void Update()
@@ -24,6 +22,5 @@ public class ServedObjectHpBar : MonoBehaviour
         
         slider.maxValue = servedObject.maxHp;
         slider.value = servedObject.hp;
-        
     }
 }
