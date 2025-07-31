@@ -20,7 +20,11 @@ namespace Script.GameScene
             
             if (master.Equals("RightPlayer"))
             {
-                // gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                if (transform.rotation.eulerAngles.y == 0)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                    return;
+                }
                 gameObject.transform.Rotate(0, 180, 0);
             }
         }
