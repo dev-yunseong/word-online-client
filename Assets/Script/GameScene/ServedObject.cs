@@ -6,6 +6,8 @@ namespace Script.GameScene
     {
         public int id;
         private GameObject _effectInstance = null;
+        public int hp;
+        public int maxHp;
         private string master;
         
         public void SetMaster(string master)
@@ -18,7 +20,11 @@ namespace Script.GameScene
             
             if (master.Equals("RightPlayer"))
             {
-                // gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                if (transform.rotation.eulerAngles.y == 0)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                    return;
+                }
                 gameObject.transform.Rotate(0, 180, 0);
             }
         }
@@ -29,6 +35,8 @@ namespace Script.GameScene
                 updatedObjectDto.position.x, 
                 updatedObjectDto.position.y, 
                 0);
+            hp = updatedObjectDto.hp;
+            maxHp = updatedObjectDto.maxHp;
             if (updatedObjectDto.status.Equals("Destroyed"))
             {
                 ObjectContainer.Instance.UnregisterObject(this);
