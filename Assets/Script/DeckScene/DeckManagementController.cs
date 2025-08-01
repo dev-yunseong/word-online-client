@@ -59,6 +59,8 @@ namespace Script.DeckScene
         public Transform ownedCardsContainer;    // 보유 카드
         public GameObject cardItemPrefab;        // 카드 UI 프리팹
         public GameObject cardInDeckItemPrefab;        // 덱 카드 UI 프리팹
+        public GameObject createDeckPrefab;        // 덱 생성 UI 프리팹
+        public Button submitDeckButton;        // 덱 제출 버튼
 
         private DeckResponseDto[] userDecks;
         private CardDto[] ownedCards;
@@ -166,6 +168,10 @@ namespace Script.DeckScene
                 btn.onClick.AddListener(() => OnDeckSelected(deck));
                 deckUI.Init(deck.name);
             }
+
+            GameObject createDeckObject = Instantiate(createDeckPrefab, deckListContainer);
+            Button createDeckButton = createDeckObject.GetComponent<Button>();
+            createDeckButton.onClick.AddListener(() => OnNewDeckSelected());
         }
         
         void OnDeckSelected(DeckResponseDto deck) {
@@ -192,6 +198,14 @@ namespace Script.DeckScene
             
             //DeckContext에 현재 덱 저장
             DeckSceneContext.CurrentDeck = deck;
+            submitDeckButton.onClick.AddListener(() => OnDeckSubmit());
+        }
+        void OnNewDeckSelected() {
+            DeckResponseDto deck = new DeckResponseDto(){id = userDecks[0].id, name = "새 덱", cards = Array.Empty<CardDto>()};
+            
+            //DeckContext에 현재 덱 저장
+            DeckSceneContext.CurrentDeck = deck;
+            submitDeckButton.onClick.AddListener(() => OnNewDeckSubmit());
         }
 
         void OnOwnedCardSelected(CardDto card)
@@ -219,6 +233,67 @@ namespace Script.DeckScene
         public void OnDeckSubmit()
         {
             StartCoroutine(PutDeckCoroutine(DeckSceneContext.CurrentDeck));
+        }
+        public void OnNewDeckSubmit()
+        {
+            StartCoroutine(PostDeckCoroutine(DeckSceneContext.CurrentDeck));
+        }
+        
+        private IEnumerator PostDeckCoroutine(DeckResponseDto deck)
+        {
+            //vaild한가?
+            int typeCount  = deck.cards
+                .Where(c => c.type == "Type")
+                .Select(c => c.name)     // 이름 기준으로
+                .Distinct()              // 중복 제거
+                .Count();
+            int magicCount = deck.cards
+                .Where(c => c.type == "Magic")
+                .Select(c => c.name)
+                .Distinct()
+                .Count();
+
+            Debug.Log($"Submit Try - cards : {deck.cards.Length} type : {typeCount} magic : {magicCount}");
+            
+            
+            if (deck.cards.Length != 10 || typeCount < 2 || magicCount < 2)
+            {
+                Debug.LogError("invalid deck");
+                yield break;
+            }
+            
+            var reqDto = new DeckRequestDto {
+                name    = deck.name,
+                cardIds = deck.cards.Select(c => c.id).ToArray()
+            };
+            
+            string json = JsonUtility.ToJson(reqDto);
+            Debug.Log("POST 덱 페이로드: " + json);
+
+            // 2) 요청 생성
+            string url = $"{SceneContext.ServerUrl}/api/users/mine/decks/{deck.id}";
+            using var www = new UnityWebRequest(url, "POST")
+            {
+                uploadHandler   = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json)),
+                downloadHandler = new DownloadHandlerBuffer()
+            };
+
+            // 3) 헤더 설정
+            www.SetRequestHeader("Authorization", "Bearer " + SceneContext.JwtToken);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            // 4) 전송
+            yield return www.SendWebRequest();
+
+            // 5) 결과 확인
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"덱 수정 실패: {www.responseCode} / {www.error}\n{www.downloadHandler.text}");
+            }
+            else
+            {
+                Debug.Log($"덱 수정 성공: {www.downloadHandler.text}");
+            }
         }
         
         private IEnumerator PutDeckCoroutine(DeckResponseDto deck)
@@ -253,7 +328,7 @@ namespace Script.DeckScene
             Debug.Log("PUT 덱 페이로드: " + json);
 
             // 2) 요청 생성
-            string url = $"{SceneContext.ServerUrl}/api/users/mine/decks/{deck.id}";
+            string url = $"{SceneContext.ServerUrl}/api/users/mine/decks";
             using var www = new UnityWebRequest(url, "PUT")
             {
                 uploadHandler   = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json)),
