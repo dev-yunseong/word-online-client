@@ -25,6 +25,7 @@ public class LobbyUIController : MonoBehaviour
         yield return UserInfoGetter.GetUserInfo();
         
         lobbyUserNameUI.SetUserName(SceneContext.User.name);
+        yield return FetchDecks();
     }
 
     public IEnumerator FetchDecks()
@@ -69,13 +70,30 @@ public class LobbyUIController : MonoBehaviour
     }
 
     // 3) 드랍다운에서 선택 바뀌었을 때
-    private void OnDropdownChanged(int newIndex)
+    public void OnDropdownChanged(int newIndex)
     {
         var selected = userDecks[newIndex];
         DeckSceneContext.CurrentDeck = selected;     // 컨텍스트 갱신
         UpdateCaption(selected.name);                // 상단 텍스트 갱신
+        StartCoroutine(SelectDeckCoroutine(DeckSceneContext.CurrentDeck.id));
     }
+    private IEnumerator SelectDeckCoroutine(long deckId)
+    {
+        string url = $"{SceneContext.ServerUrl}/api/users/mine/decks/{deckId}";
+        using var www = UnityWebRequest.Post(url, new WWWForm());
+        www.SetRequestHeader("Authorization", "Bearer " + SceneContext.JwtToken);
 
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"덱 선택 실패: {www.responseCode} / {www.error}");
+        }
+        else
+        {
+            Debug.Log("덱 선택 성공: " + www.downloadHandler.text);
+        }
+    }
     private void UpdateCaption(string deckName)
     {
         if (deckDropdown.captionText != null)

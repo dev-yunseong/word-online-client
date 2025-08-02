@@ -1260,6 +1260,7 @@ MonoBehaviour:
   ownedCardsContainer: {fileID: 2124729585}
   cardItemPrefab: {fileID: 4088603975563697694, guid: c993c4ee7b694014e881619d76b53d40, type: 3}
   cardInDeckItemPrefab: {fileID: 408590601876332135, guid: 6bda248da941c804686a518433b4218e, type: 3}
+  createDeckPrefab: {fileID: 2206886970295234043, guid: ddc10a1af089fed4d8a8547866d40073, type: 3}
 --- !u!1 &2124729584
 GameObject:
   m_ObjectHideFlags: 0
