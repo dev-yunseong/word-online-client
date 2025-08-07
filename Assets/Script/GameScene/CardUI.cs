@@ -13,7 +13,11 @@ namespace Script.GameScene
         
         private void Awake()
         {
-            cardSound = gameObject.AddComponent<AudioSource>();
+            cardSound = gameObject.GetComponent<AudioSource>();
+            if (cardSound == null)
+            {
+                cardSound = gameObject.AddComponent<AudioSource>();
+            }
             cardSound.clip = SoundAssets.DrawCard;
         }
 
