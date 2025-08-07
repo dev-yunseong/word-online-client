@@ -17,6 +17,6 @@ public class EnqueueButton : MonoBehaviour
     
     public void OnClickButton()
     {
-        GetStompConnector().ConnectToServer($"ws://{SceneContext.ServerIp}:{SceneContext.ServerPort}/ws?token=" + SceneContext.JwtToken);
+        GetStompConnector().ConnectToServer($"wss://{SceneContext.ServerIp}:{SceneContext.ServerPort}/ws?token=" + SceneContext.JwtToken);
     }
 }

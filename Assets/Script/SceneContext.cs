@@ -11,7 +11,7 @@ public class SceneContext : MonoBehaviour
     
     public static string ServerIp = "3.26.146.188";
     public static int ServerPort = 7777;
-    public static string ServerUrl = $"http://{ServerIp}:{ServerPort}";
+    public static string ServerUrl = $"https://{ServerIp}:{ServerPort}";
     
     public static long UserID
     {
