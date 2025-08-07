@@ -6,6 +6,7 @@ public abstract class ButtonBase : MonoBehaviour
     private AudioSource audioSource = null;
     private void Start()
     {
+        audioSource = SceneContext.Instance.gameObject.GetComponent<AudioSource>();
         if (audioSource == null)
         {
             audioSource = SceneContext.Instance.gameObject.AddComponent<AudioSource>();
