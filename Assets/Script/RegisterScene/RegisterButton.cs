@@ -5,18 +5,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-public class RegisterButton : MonoBehaviour
+public class RegisterButton : ButtonBase
 {
     [SerializeField] private TMP_InputField nameInputField;
     [SerializeField] private TMP_InputField emailInputField;
     [SerializeField] private TMP_InputField passwordInputField;
-    
-    public void OnButtonClick()
-    {
-        StartCoroutine(RegisterCoroutine(
-            new RegisterRequestDto(emailInputField.text, passwordInputField.text, nameInputField.text)
-            ));
-    }
     
     private IEnumerator RegisterCoroutine(RegisterRequestDto registerRequestDto)
     {
@@ -45,5 +38,12 @@ public class RegisterButton : MonoBehaviour
         }
         
         SceneManager.LoadScene("LobbyScene");
+    }
+
+    protected override void OnClickButton()
+    {
+        StartCoroutine(RegisterCoroutine(
+            new RegisterRequestDto(emailInputField.text, passwordInputField.text, nameInputField.text)
+        ));
     }
 }

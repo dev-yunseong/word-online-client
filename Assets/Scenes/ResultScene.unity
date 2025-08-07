@@ -351,8 +351,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 447655980}
-        m_TargetAssemblyTypeName: EnqueueButton, Assembly-CSharp
-        m_MethodName: OnClickButton
+        m_TargetAssemblyTypeName: ButtonBase, Assembly-CSharp
+        m_MethodName: ButtonEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -888,8 +888,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1915461756}
-        m_TargetAssemblyTypeName: GotoLobbyButton, Assembly-CSharp
-        m_MethodName: OnClick
+        m_TargetAssemblyTypeName: ButtonBase, Assembly-CSharp
+        m_MethodName: ButtonEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

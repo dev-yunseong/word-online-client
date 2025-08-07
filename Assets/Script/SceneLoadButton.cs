@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoadButton : MonoBehaviour
+public class SceneLoadButton : ButtonBase
 {
     [SerializeField] string sceneName;
-    
-    public void OnClickButton()
+
+    protected override void OnClickButton()
     {
         if (string.IsNullOrEmpty(sceneName))
         {

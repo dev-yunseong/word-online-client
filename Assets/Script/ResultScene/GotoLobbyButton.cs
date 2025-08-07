@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GotoLobbyButton : MonoBehaviour
+public class GotoLobbyButton : ButtonBase
 {
-    public void OnClick()
+    protected override void OnClickButton()
     {
         SceneManager.LoadScene("LobbyScene");
     }

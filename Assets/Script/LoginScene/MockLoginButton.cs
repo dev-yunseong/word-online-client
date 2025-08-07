@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MockLoginButton : MonoBehaviour
+public class MockLoginButton : ButtonBase
 {
-    public void OnClickButton()
+    protected override void OnClickButton()
     {
         SceneManager.LoadScene("LobbyScene");
     }

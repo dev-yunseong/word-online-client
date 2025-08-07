@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ManageDeckButton : MonoBehaviour
+public class ManageDeckButton : ButtonBase
 {
-    public void OnClick()
+    protected override void OnClickButton()
     {
         SceneManager.LoadScene("ManageDeckScene");
     }

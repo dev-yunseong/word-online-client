@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class SceneContext : MonoBehaviour
 {
+    public static SceneContext Instance { 
+        get; 
+        private set; 
+    }
     
     public static string JwtToken
     {
         get; set;
     }
     
-    public static string ServerIp = "3.26.146.188";
+    public static string ServerIp = "www.monolong.shop";
     public static int ServerPort = 7777;
     public static string ServerUrl = $"https://{ServerIp}:{ServerPort}";
     
@@ -60,8 +64,14 @@ public class SceneContext : MonoBehaviour
         get; set;
     }
     
-    private void Start()
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
         DontDestroyOnLoad(this);
     }
 }

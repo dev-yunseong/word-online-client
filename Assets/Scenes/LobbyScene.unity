@@ -626,8 +626,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 278361954}
-        m_TargetAssemblyTypeName: ManageDeckButton, Assembly-CSharp
-        m_MethodName: OnClick
+        m_TargetAssemblyTypeName: ButtonBase, Assembly-CSharp
+        m_MethodName: ButtonEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -999,8 +999,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 447655980}
-        m_TargetAssemblyTypeName: EnqueueButton, Assembly-CSharp
-        m_MethodName: OnClickButton
+        m_TargetAssemblyTypeName: ButtonBase, Assembly-CSharp
+        m_MethodName: ButtonEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1186,7 +1186,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Option A
+  m_text: "\uAE30\uBCF8\uB371"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 798a9152159fe4eb1ac04250bf6f64d8, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2482,6 +2482,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!1001 &1719095246
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060022992406841006, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7673286894793800375, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
+      propertyPath: m_Name
+      value: SceneContext
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f51fea6aec8254dbdb502d1a44e7ed1c, type: 3}
 --- !u!1 &1777325163
 GameObject:
   m_ObjectHideFlags: 0
@@ -2681,3 +2738,4 @@ SceneRoots:
   - {fileID: 1777325166}
   - {fileID: 72222818}
   - {fileID: 557231814}
+  - {fileID: 1719095246}

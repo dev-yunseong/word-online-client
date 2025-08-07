@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnqueueButton : MonoBehaviour
+public class EnqueueButton : ButtonBase
 {
     [SerializeField] StompConnector StompConnector;
 
@@ -15,7 +15,7 @@ public class EnqueueButton : MonoBehaviour
         return StompConnector;
     }
     
-    public void OnClickButton()
+    protected override void OnClickButton()
     {
         GetStompConnector().ConnectToServer($"wss://{SceneContext.ServerIp}:{SceneContext.ServerPort}/ws?token=" + SceneContext.JwtToken);
     }
