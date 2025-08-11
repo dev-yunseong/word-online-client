@@ -75,7 +75,7 @@ namespace Script.DeckScene
         var token = SceneContext.JwtToken; 
 
         // 2) 요청 생성 (GET)
-        string urlCards = SceneContext.ServerUrl + "/api/users/mine/cards";
+        string urlCards = SceneContext.CurrentServer.url + "/api/users/mine/cards";
         using var wwwPool = new UnityWebRequest(urlCards, "GET");
     
         // 3) 헤더 설정
@@ -102,7 +102,7 @@ namespace Script.DeckScene
         
 
         // 2) 요청 생성 (GET)
-        string urlDeck = SceneContext.ServerUrl + "/api/users/mine/decks";
+        string urlDeck = SceneContext.CurrentServer.url  + "/api/users/mine/decks";
         using var wwwDecks = new UnityWebRequest(urlDeck, "GET");
     
         // 3) 헤더 설정
