@@ -12,7 +12,7 @@ public class ServerDropDown : MonoBehaviour
         dropdown.ClearOptions();
         
         List<string> options = new List<string>();
-        ServerList.servers.ForEach(server => options.Add(server.name));
+        ServerList.servers.ForEach(server => options.Add($"{server.name} (---)"));
         
         dropdown.AddOptions(options);
         
@@ -23,10 +23,20 @@ public class ServerDropDown : MonoBehaviour
     private void LoadPings()
     {
         int index = 0;
+        bool isFirst = true;
         foreach (Server server in ServerList.servers)
         {
             var index1 = index;
-            StartCoroutine(server.GetPing(ping => ChangeOptionText(index1, $"{server.name} {(ping < 0 ? "N/A" : $"({ping} ms)")}")));
+            StartCoroutine(server.GetPing(ping =>
+                {
+                    ChangeOptionText(index1, $"{server.name} {(ping < 0 ? "(N/A)" : $"({ping} ms)")}");
+                    if (isFirst && ping >= 0)
+                    {
+                        isFirst = false;
+                        dropdown.value = index1;
+                        SceneContext.SetServer(index1);
+                    }
+                }));
             index++;
         }
     }
