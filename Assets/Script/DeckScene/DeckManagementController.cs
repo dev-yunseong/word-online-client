@@ -271,7 +271,7 @@ namespace Script.DeckScene
             Debug.Log("POST 덱 페이로드: " + json);
 
             // 2) 요청 생성
-            string url = $"{SceneContext.ServerUrl}/api/users/mine/decks/{deck.id}";
+            string url = $"{SceneContext.CurrentServer.url}/api/users/mine/decks/{deck.id}";
             using var www = new UnityWebRequest(url, "POST")
             {
                 uploadHandler   = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json)),
@@ -328,7 +328,7 @@ namespace Script.DeckScene
             Debug.Log("PUT 덱 페이로드: " + json);
 
             // 2) 요청 생성
-            string url = $"{SceneContext.ServerUrl}/api/users/mine/decks";
+            string url = $"{SceneContext.CurrentServer.url}/api/users/mine/decks";
             using var www = new UnityWebRequest(url, "PUT")
             {
                 uploadHandler   = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json)),

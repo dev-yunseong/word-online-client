@@ -15,7 +15,7 @@ public class RegisterButton : ButtonBase
     {
         string jsonData = JsonUtility.ToJson(registerRequestDto);
         
-        using (UnityWebRequest webRequest = new UnityWebRequest(SceneContext.ServerUrl + "/api/users", "POST"))
+        using (UnityWebRequest webRequest = new UnityWebRequest(SceneContext.CurrentServer.url + "/api/users", "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
