@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine.Networking;
 
 namespace Script.Data
@@ -24,15 +25,16 @@ namespace Script.Data
         
         public IEnumerator GetPing(Action<int> callback)
         {
-            DateTime startTime = DateTime.Now;
+            Stopwatch stopwatch = new Stopwatch();
             using var www = new UnityWebRequest($"{url}/healthcheck", "GET");
-            
+
+            stopwatch.Start();
             yield return www.SendWebRequest();
+            stopwatch.Stop();
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                DateTime endTime = DateTime.Now;
-                int ping = (int)(endTime - startTime).TotalMilliseconds;
+                int ping = (int)stopwatch.ElapsedMilliseconds;
                 callback?.Invoke(ping);
             }
             else
