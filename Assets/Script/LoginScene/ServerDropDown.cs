@@ -26,7 +26,7 @@ public class ServerDropDown : MonoBehaviour
         foreach (Server server in ServerList.servers)
         {
             var index1 = index;
-            StartCoroutine(server.GetPing(ping => ChangeOptionText(index1, $"{server.name} {(ping < 0 ? "no signal" : $"({ping} ms)")}")));
+            StartCoroutine(server.GetPing(ping => ChangeOptionText(index1, $"{server.name} {(ping < 0 ? "N/A" : $"({ping} ms)")}")));
             index++;
         }
     }
