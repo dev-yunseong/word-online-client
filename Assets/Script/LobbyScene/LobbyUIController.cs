@@ -30,7 +30,7 @@ public class LobbyUIController : MonoBehaviour
 
     public IEnumerator FetchDecks()
     {
-        string url = $"{SceneContext.ServerUrl}/api/users/mine/decks";
+        string url = $"{SceneContext.CurrentServer.url}/api/users/mine/decks";
         using var www = UnityWebRequest.Get(url);
         www.SetRequestHeader("Authorization", "Bearer " + SceneContext.JwtToken);
         www.downloadHandler = new DownloadHandlerBuffer();
@@ -79,7 +79,7 @@ public class LobbyUIController : MonoBehaviour
     }
     private IEnumerator SelectDeckCoroutine(long deckId)
     {
-        string url = $"{SceneContext.ServerUrl}/api/users/mine/decks/{deckId}";
+        string url = $"{SceneContext.CurrentServer.url}/api/users/mine/decks/{deckId}";
         using var www = UnityWebRequest.Post(url, new WWWForm());
         www.SetRequestHeader("Authorization", "Bearer " + SceneContext.JwtToken);
 
