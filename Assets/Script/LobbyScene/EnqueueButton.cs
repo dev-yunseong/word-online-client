@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Script.Global;
 using UnityEngine;
 
-public class EnqueueButton : ButtonBase
+public class EnqueueButton : AsyncButtonBase
 {
     [SerializeField] StompConnector StompConnector;
 
@@ -17,6 +19,13 @@ public class EnqueueButton : ButtonBase
     
     protected override void OnClickButton()
     {
-        GetStompConnector().ConnectToServer(SceneContext.CurrentServer.webSocketUrl + SceneContext.JwtToken);
+        try
+        {
+            GetStompConnector().ConnectToServer(SceneContext.CurrentServer.webSocketUrl + SceneContext.JwtToken);
+        }
+        catch (Exception e)
+        {
+            ResetButton();
+        }
     }
 }
