@@ -30,5 +30,16 @@ namespace Script.GameScene
             }
             return null;
         }
+        public Sprite GetCardImage(string cardType)
+        {
+            foreach (var mapping in cardImageMappings)
+            {
+                if (mapping.CardType.ToString() == cardType)
+                {
+                    return mapping.cardImage;
+                }
+            }
+            return null;
+        }
     }
 }
