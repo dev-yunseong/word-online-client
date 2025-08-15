@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using System.Runtime.InteropServices;
 using Script.Data;
 using Script.GameScene;
 using UnityEngine.SceneManagement;
@@ -219,8 +218,12 @@ public class StompConnector : MonoBehaviour
                 GameSceneUIController.Instance.UpdateUserHps(info.leftPlayerHp, info.rightPlayerHp);
                 //
                 // // 카드 추가
-                foreach (CardType cardName in info.cards.added)
-                    GameSceneUIController.Instance.AddCard(cardName);
+                foreach (string cardName in info.cards.added)
+                {
+                    CardType cardType = (CardType)Enum.Parse(typeof(CardType), cardName, true);
+                    GameSceneUIController.Instance.AddCard(cardType);
+                }
+                    
                 //
                 // // 생성된 오브젝트 배치
                 foreach (var created in info.objects.create)
