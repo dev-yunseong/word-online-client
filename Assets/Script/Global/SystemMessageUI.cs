@@ -47,11 +47,11 @@ public class SystemMessageUI : MonoBehaviour
     {
         currentMessage = msg;
         messageText.text = msg;
-        messageText.gameObject.SetActive(true);
+        messageText.transform.parent.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(duration);
 
-        messageText.gameObject.SetActive(false);
+        messageText.transform.parent.gameObject.SetActive(false);
         currentMessage = "";
         displayRoutine = null;
     }
