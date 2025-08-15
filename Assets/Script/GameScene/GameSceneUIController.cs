@@ -1,4 +1,5 @@
 using System.Collections;
+using Script.Data;
 using Script.GameScene;
 using TMPro;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class GameSceneUIController : MonoBehaviour
     [SerializeField] private GameObject textObject;
     [SerializeField] private TextMeshProUGUI textSystemMsg;
 
+    [SerializeField] private CardImageMapper cardImageMapper;
 
     public void Announce(string text)
     {
@@ -70,9 +72,10 @@ public class GameSceneUIController : MonoBehaviour
         manaSlider.value = mana;
     }
 
-    public void AddCard(string cardname)
+    public void AddCard(CardType cardname)
     {
         CardUI cardUI = Instantiate(cardUIPrefab, lowerBar.transform);
-        cardUI.Init(cardname);
+        cardUI.transform.GetChild(1).GetComponent<Image>().sprite = cardImageMapper.GetCardImage(cardname);
+        cardUI.Init(cardname.ToString());
     }
 }

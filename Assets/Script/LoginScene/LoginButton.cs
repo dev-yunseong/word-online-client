@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Script.Global;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-public class LoginButton : ButtonBase
+public class LoginButton : AsyncButtonBase
 {
     [SerializeField] private TMP_InputField emailInputField;
     [SerializeField] private TMP_InputField passwordInputField;
@@ -26,6 +27,8 @@ public class LoginButton : ButtonBase
             if (webRequest.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("Error: " + webRequest.error);
+                SystemMessageUI.Instance.ShowMessage("Error: " + webRequest.error);
+                ResetButton();
                 yield break;
             }
             

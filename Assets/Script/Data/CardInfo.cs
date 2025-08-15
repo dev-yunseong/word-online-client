@@ -1,3 +1,5 @@
+using Script.Data;
+
 [System.Serializable]
 public class CardInfo
 {

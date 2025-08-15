@@ -1,6 +1,7 @@
 using System;
-using UnityEngine;
 using System.Runtime.InteropServices;
+using UnityEngine;
+using Script.Data;
 using Script.GameScene;
 using UnityEngine.SceneManagement;
 
@@ -93,6 +94,7 @@ public class StompConnector : MonoBehaviour
     // 연결 종료 처리
     public void OnDisconnected(string message)
     {
+        SystemMessageUI.Instance.ShowMessage("STOMP 연결 종료: " + message);
         Debug.Log("STOMP 연결 종료: " + message);
         isConnected = false;
     }
@@ -100,6 +102,7 @@ public class StompConnector : MonoBehaviour
     // 연결 실패 처리
     public void OnError(string error)
     {
+        SystemMessageUI.Instance.ShowMessage("STOMP 에러: " + error);
         Debug.LogError("STOMP 에러: " + error);
     }
 
@@ -130,6 +133,7 @@ public class StompConnector : MonoBehaviour
         }
         else
         {
+            SystemMessageUI.Instance.ShowMessage("STOMP 서버에 연결되지 않았습니다.");
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
     }
@@ -145,6 +149,7 @@ public class StompConnector : MonoBehaviour
         }
         else
         {
+            SystemMessageUI.Instance.ShowMessage("STOMP 서버에 연결되지 않았습니다.");
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
     }
@@ -160,6 +165,7 @@ public class StompConnector : MonoBehaviour
         }
         else
         {
+            SystemMessageUI.Instance.ShowMessage("STOMP 서버에 연결되지 않았습니다.");
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
     }
@@ -175,6 +181,7 @@ public class StompConnector : MonoBehaviour
         }
         else
         {
+            SystemMessageUI.Instance.ShowMessage("STOMP 서버에 연결되지 않았습니다.");
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
     }
@@ -213,7 +220,11 @@ public class StompConnector : MonoBehaviour
                 //
                 // // 카드 추가
                 foreach (string cardName in info.cards.added)
-                    GameSceneUIController.Instance.AddCard(cardName);
+                {
+                    CardType cardType = (CardType)Enum.Parse(typeof(CardType), cardName, true);
+                    GameSceneUIController.Instance.AddCard(cardType);
+                }
+                    
                 //
                 // // 생성된 오브젝트 배치
                 foreach (var created in info.objects.create)
@@ -240,7 +251,7 @@ public class StompConnector : MonoBehaviour
                     {
                         cardUI.SetCardActive(false);
                     }
-                    GameSceneUIController.Instance.Announce("유효한 움직임이 아닙니다!");
+                    SystemMessageUI.Instance.ShowMessage("유효한 움직임이 아닙니다!");
                     Debug.Log("유효한 움직임이 아닙니다!");
                 }
                 CardInputSender.inputRequestDict.Remove(magicValid.id);
