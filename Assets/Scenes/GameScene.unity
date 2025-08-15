@@ -3300,6 +3300,7 @@ MonoBehaviour:
   lowerBar: {fileID: 447655975}
   textObject: {fileID: 304404311}
   textSystemMsg: {fileID: 304404313}
+  cardImageMapper: {fileID: 11400000, guid: 801779e6bc17149e683648b90569ac9e, type: 2}
 --- !u!4 &983237233
 Transform:
   m_ObjectHideFlags: 0
