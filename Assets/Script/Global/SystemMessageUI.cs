@@ -18,7 +18,7 @@ public class SystemMessageUI : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        messageText.gameObject.SetActive(false);
+        messageText.transform.parent.gameObject.SetActive(false);
     }
 
     public void ShowMessage(string msg)
