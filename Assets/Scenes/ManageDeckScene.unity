@@ -801,19 +801,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 812343962}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2065755163}
-        m_TargetAssemblyTypeName: Script.DeckScene.DeckManagementController, Assembly-CSharp
-        m_MethodName: OnDeckSubmit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &812343962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388,7 +1376,7 @@ MonoBehaviour:
   cardItemPrefab: {fileID: 4088603975563697694, guid: c993c4ee7b694014e881619d76b53d40, type: 3}
   cardInDeckItemPrefab: {fileID: 408590601876332135, guid: 6bda248da941c804686a518433b4218e, type: 3}
   createDeckPrefab: {fileID: 2206886970295234043, guid: ddc10a1af089fed4d8a8547866d40073, type: 3}
-  submitDeckButton: {fileID: 0}
+  submitDeckButton: {fileID: 812343961}
 --- !u!114 &2065755164
 MonoBehaviour:
   m_ObjectHideFlags: 0

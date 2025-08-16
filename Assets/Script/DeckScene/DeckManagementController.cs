@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Script.DeckScene
@@ -70,70 +71,60 @@ namespace Script.DeckScene
         }
 
         IEnumerator LoadAll() {
+            var token = SceneContext.JwtToken; 
+
+            // 2) 요청 생성 (GET)
+            string urlCards = SceneContext.CurrentServer.url + "/api/users/mine/cards";
+            using var wwwPool = new UnityWebRequest(urlCards, "GET");
         
-#if UNITY_WEBGL && !UNITY_EDITOR
-        var token = SceneContext.JwtToken; 
+            // 3) 헤더 설정
+            wwwPool.SetRequestHeader("Authorization", "Bearer " + token);
 
-        // 2) 요청 생성 (GET)
-        string urlCards = SceneContext.CurrentServer.url + "/api/users/mine/cards";
-        using var wwwPool = new UnityWebRequest(urlCards, "GET");
-    
-        // 3) 헤더 설정
-        wwwPool.SetRequestHeader("Authorization", "Bearer " + token);
+            // 4) 다운로드 핸들러 할당
+            wwwPool.downloadHandler = new DownloadHandlerBuffer();
 
-        // 4) 다운로드 핸들러 할당
-        wwwPool.downloadHandler = new DownloadHandlerBuffer();
+            // 5) 전송
+            yield return wwwPool.SendWebRequest();
 
-        // 5) 전송
-        yield return wwwPool.SendWebRequest();
+            // 6) 결과 체크
+            if (wwwPool.result != UnityWebRequest.Result.Success) {
+                Debug.LogError(
+                    $"보유 카드 풀 로드 실패: {wwwPool.responseCode} / {wwwPool.error}\n{wwwPool.downloadHandler.text}"
+                );
+                yield break;
+            }
 
-        // 6) 결과 체크
-        if (wwwPool.result != UnityWebRequest.Result.Success) {
-            Debug.LogError(
-                $"보유 카드 풀 로드 실패: {wwwPool.responseCode} / {wwwPool.error}\n{wwwPool.downloadHandler.text}"
-            );
-            yield break;
-        }
+            // 7) 파싱
+            Debug.Log($"보유 카드 리스트: {wwwPool.downloadHandler.text}");
+            var poolDto = JsonUtility.FromJson<CardPoolDto>(wwwPool.downloadHandler.text);
+            ownedCards = poolDto.cards ?? Array.Empty<CardDto>();
+            
 
-        // 7) 파싱
-        Debug.Log($"보유 카드 리스트: {wwwPool.downloadHandler.text}");
-        var poolDto = JsonUtility.FromJson<CardPoolDto>(wwwPool.downloadHandler.text);
-        ownedCards = poolDto.cards ?? Array.Empty<CardDto>();
+            // 2) 요청 생성 (GET)
+            string urlDeck = SceneContext.CurrentServer.url  + "/api/users/mine/decks";
+            using var wwwDecks = new UnityWebRequest(urlDeck, "GET");
         
+            // 3) 헤더 설정
+            wwwDecks.SetRequestHeader("Authorization", "Bearer " + token);
 
-        // 2) 요청 생성 (GET)
-        string urlDeck = SceneContext.CurrentServer.url  + "/api/users/mine/decks";
-        using var wwwDecks = new UnityWebRequest(urlDeck, "GET");
-    
-        // 3) 헤더 설정
-        wwwDecks.SetRequestHeader("Authorization", "Bearer " + token);
+            // 4) 다운로드 핸들러 할당
+            wwwDecks.downloadHandler = new DownloadHandlerBuffer();
 
-        // 4) 다운로드 핸들러 할당
-        wwwDecks.downloadHandler = new DownloadHandlerBuffer();
+            // 5) 전송
+            yield return wwwDecks.SendWebRequest();
 
-        // 5) 전송
-        yield return wwwDecks.SendWebRequest();
+            // 6) 결과 체크
+            if (wwwDecks.result != UnityWebRequest.Result.Success) {
+                Debug.LogError(
+                    $"유저 덱 리스트 로드 실패: {wwwDecks.responseCode} / {wwwDecks.error}\n{wwwDecks.downloadHandler.text}"
+                );
+                yield break;
+            }
 
-        // 6) 결과 체크
-        if (wwwDecks.result != UnityWebRequest.Result.Success) {
-            Debug.LogError(
-                $"유저 덱 리스트 로드 실패: {wwwDecks.responseCode} / {wwwDecks.error}\n{wwwDecks.downloadHandler.text}"
-            );
-            yield break;
-        }
-
-        // 7) 파싱
-        Debug.Log($"유저 덱 리스트: {wwwDecks.downloadHandler.text}");
-        userDecks = JsonHelper.FromJson<DeckResponseDto>(wwwDecks.downloadHandler.text);
-        Debug.Log(userDecks.Length);
-        
-#endif
-        
-
-#if UNITY_EDITOR
-            ownedCards = JsonUtility.FromJson<CardPoolDto>("{\"cards\":[{\"id\":1,\"name\":\"Fire\",\"type\":\"Type\"},{\"id\":1,\"name\":\"Fire\",\"type\":\"Type\"},{\"id\":1,\"name\":\"Fire\",\"type\":\"Type\"},{\"id\":2,\"name\":\"Water\",\"type\":\"Type\"},{\"id\":2,\"name\":\"Water\",\"type\":\"Type\"},{\"id\":2,\"name\":\"Water\",\"type\":\"Type\"},{\"id\":3,\"name\":\"Lightning\",\"type\":\"Type\"},{\"id\":3,\"name\":\"Lightning\",\"type\":\"Type\"},{\"id\":3,\"name\":\"Lightning\",\"type\":\"Type\"},{\"id\":4,\"name\":\"Rock\",\"type\":\"Type\"},{\"id\":4,\"name\":\"Rock\",\"type\":\"Type\"},{\"id\":4,\"name\":\"Rock\",\"type\":\"Type\"},{\"id\":5,\"name\":\"Leaf\",\"type\":\"Type\"},{\"id\":5,\"name\":\"Leaf\",\"type\":\"Type\"},{\"id\":5,\"name\":\"Leaf\",\"type\":\"Type\"},{\"id\":6,\"name\":\"Shoot\",\"type\":\"Magic\"},{\"id\":6,\"name\":\"Shoot\",\"type\":\"Magic\"},{\"id\":6,\"name\":\"Shoot\",\"type\":\"Magic\"},{\"id\":7,\"name\":\"Summon\",\"type\":\"Magic\"},{\"id\":7,\"name\":\"Summon\",\"type\":\"Magic\"},{\"id\":7,\"name\":\"Summon\",\"type\":\"Magic\"},{\"id\":8,\"name\":\"Spawn\",\"type\":\"Magic\"},{\"id\":8,\"name\":\"Spawn\",\"type\":\"Magic\"},{\"id\":8,\"name\":\"Spawn\",\"type\":\"Magic\"},{\"id\":9,\"name\":\"Explode\",\"type\":\"Magic\"},{\"id\":9,\"name\":\"Explode\",\"type\":\"Magic\"},{\"id\":9,\"name\":\"Explode\",\"type\":\"Magic\"}]}").cards;
-            userDecks = JsonHelper.FromJson<DeckResponseDto>("[{\"id\":3,\"name\":\"기본 덱\",\"cards\":[{\"id\":1,\"name\":\"Fire\",\"type\":\"Type\"},{\"id\":2,\"name\":\"Water\",\"type\":\"Type\"},{\"id\":3,\"name\":\"Lightning\",\"type\":\"Type\"},{\"id\":4,\"name\":\"Rock\",\"type\":\"Type\"},{\"id\":5,\"name\":\"Leaf\",\"type\":\"Type\"},{\"id\":6,\"name\":\"Shoot\",\"type\":\"Magic\"},{\"id\":6,\"name\":\"Shoot\",\"type\":\"Magic\"},{\"id\":7,\"name\":\"Summon\",\"type\":\"Magic\"},{\"id\":8,\"name\":\"Spawn\",\"type\":\"Magic\"},{\"id\":9,\"name\":\"Explode\",\"type\":\"Magic\"}]}]");
-#endif
+            // 7) 파싱
+            Debug.Log($"유저 덱 리스트: {wwwDecks.downloadHandler.text}");
+            userDecks = JsonHelper.FromJson<DeckResponseDto>(wwwDecks.downloadHandler.text);
+            Debug.Log(userDecks.Length);
         
             PopulateDeckList();
             var summary = ownedCards
@@ -174,14 +165,14 @@ namespace Script.DeckScene
             createDeckButton.onClick.AddListener(() => OnNewDeckSelected());
         }
         
-        void OnDeckSelected(DeckResponseDto deck) {
-            var summary = deck.cards
-                .GroupBy(c => c.name)                
-                .Select(g => new { 
-                    Name  = g.Key,                  
-                    Count = g.Count()               
-                })
-                .ToList(); 
+        private void ReloadDeckList() {
+            var summary = DeckSceneContext.CurrentDeck.cards
+            .GroupBy(c => c.name)                
+            .Select(g => new { 
+                Name  = g.Key,                  
+                Count = g.Count()               
+            })
+            .ToList(); 
         
             // 덱 카드 표시
             foreach (Transform t in deckCardsContainer) Destroy(t.gameObject);
@@ -194,31 +185,46 @@ namespace Script.DeckScene
                     Array.Find(ownedCards, c=> c.name == cardInDeck.Name))
                 );
                 ui.Init(cardInDeck.Name, cardInDeck.Count);
-            }
+            }   
+        }
+        
+        void OnDeckSelected(DeckResponseDto deck) {
+            Debug.Log($"OnDeckSelected: {deck.name} (ID: {deck.id})");
             
             //DeckContext에 현재 덱 저장
             DeckSceneContext.CurrentDeck = deck;
+
+            ReloadDeckList();
+
+            submitDeckButton.onClick.RemoveAllListeners();
             submitDeckButton.onClick.AddListener(() => OnDeckSubmit());
         }
         void OnNewDeckSelected() {
-            DeckResponseDto deck = new DeckResponseDto(){id = userDecks[0].id, name = "새 덱", cards = Array.Empty<CardDto>()};
+            Debug.Log("OnNewDeckSelected");
+            DeckResponseDto deck = new DeckResponseDto(){id = -1, name = "새 덱", cards = Array.Empty<CardDto>()};
+            
+            foreach (Transform t in deckCardsContainer) Destroy(t.gameObject);
             
             //DeckContext에 현재 덱 저장
             DeckSceneContext.CurrentDeck = deck;
+            submitDeckButton.onClick.RemoveAllListeners();
             submitDeckButton.onClick.AddListener(() => OnNewDeckSubmit());
         }
 
         void OnOwnedCardSelected(CardDto card)
         {
+            Debug.Log($"OnOwnedCardSelected: {card.name} (ID: {card.id})");
             if (DeckSceneContext.CurrentDeck.cards.Length < 10  && 
                 DeckSceneContext.CurrentDeck.cards.Count(c => c.id == card.id)
                 < ownedCards.Count(c => c.id == card.id))
             {
+                Debug.Log($"Adding card to deck: {card.name} (ID: {card.id})");
                 var cardList = DeckSceneContext.CurrentDeck.cards.ToList();
                 cardList.Add(card);
                 DeckSceneContext.CurrentDeck.cards = cardList.ToArray();
             }
-            OnDeckSelected(DeckSceneContext.CurrentDeck);
+
+            ReloadDeckList();
         }
 
         void OnCardInDeckSelected(CardDto card)
@@ -232,10 +238,12 @@ namespace Script.DeckScene
         
         public void OnDeckSubmit()
         {
+            Debug.Log("OnDeckSubmit");
             StartCoroutine(PutDeckCoroutine(DeckSceneContext.CurrentDeck));
         }
         public void OnNewDeckSubmit()
         {
+            Debug.Log("OnNewDeckSubmit");
             StartCoroutine(PostDeckCoroutine(DeckSceneContext.CurrentDeck));
         }
         
@@ -281,7 +289,7 @@ namespace Script.DeckScene
             Debug.Log("POST 덱 페이로드: " + json);
 
             // 2) 요청 생성
-            string url = $"{SceneContext.CurrentServer.url}/api/users/mine/decks/{deck.id}";
+            string url = $"{SceneContext.CurrentServer.url}/api/users/mine/decks";
             using var www = new UnityWebRequest(url, "POST")
             {
                 uploadHandler   = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json)),
@@ -298,13 +306,13 @@ namespace Script.DeckScene
             // 5) 결과 확인
             if (www.result != UnityWebRequest.Result.Success)
             {
-                SystemMessageUI.Instance.ShowMessage($"덱 수정 실패!");
-                Debug.LogError($"덱 수정 실패: {www.responseCode} / {www.error}\n{www.downloadHandler.text}");
+                SystemMessageUI.Instance.ShowMessage("덱 생성 실패!");
+                Debug.LogError($"덱 생성 실패: {www.responseCode} / {www.error}\n{www.downloadHandler.text}");
             }
             else
             {
-                SystemMessageUI.Instance.ShowMessage($"덱 수정 성공!");
-                Debug.Log($"덱 수정 성공: {www.downloadHandler.text}");
+                SystemMessageUI.Instance.ShowMessage("덱 생성 성공!");
+                Debug.Log($"덱 생성 성공: {www.downloadHandler.text}");
             }
         }
         
@@ -350,7 +358,7 @@ namespace Script.DeckScene
             Debug.Log("PUT 덱 페이로드: " + json);
 
             // 2) 요청 생성
-            string url = $"{SceneContext.CurrentServer.url}/api/users/mine/decks";
+            string url = $"{SceneContext.CurrentServer.url}/api/users/mine/decks/{deck.id}";
             using var www = new UnityWebRequest(url, "PUT")
             {
                 uploadHandler   = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json)),
@@ -367,12 +375,13 @@ namespace Script.DeckScene
             // 5) 결과 확인
             if (www.result != UnityWebRequest.Result.Success)
             {
-                SystemMessageUI.Instance.ShowMessage($"덱 수정 실패!");
+                SystemMessageUI.Instance.ShowMessage("덱 수정 실패!");
                 Debug.LogError($"덱 수정 실패: {www.responseCode} / {www.error}\n{www.downloadHandler.text}");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name); // reload
             }
             else
             {
-                SystemMessageUI.Instance.ShowMessage($"덱 수정 성공!");
+                SystemMessageUI.Instance.ShowMessage("덱 수정 성공!");
                 Debug.Log($"덱 수정 성공: {www.downloadHandler.text}");
             }
         }

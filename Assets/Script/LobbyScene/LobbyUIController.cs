@@ -45,6 +45,9 @@ public class LobbyUIController : MonoBehaviour
 
         // JsonHelper 는 이전에 정의한 generic 래퍼 유틸리티
         userDecks = JsonHelper.FromJson<DeckResponseDto>(www.downloadHandler.text);
+        
+        DeckSceneContext.CurrentDeck = userDecks.First(d => d.id == SceneContext.User.selectedDeckId);
+        
         PopulateDropdown();
     }
 
