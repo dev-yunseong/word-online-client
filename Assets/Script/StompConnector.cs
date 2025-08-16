@@ -94,7 +94,6 @@ public class StompConnector : MonoBehaviour
     // 연결 종료 처리
     public void OnDisconnected(string message)
     {
-        SystemMessageUI.Instance.ShowMessage("STOMP 연결 종료: " + message);
         Debug.Log("STOMP 연결 종료: " + message);
         isConnected = false;
     }
@@ -102,7 +101,7 @@ public class StompConnector : MonoBehaviour
     // 연결 실패 처리
     public void OnError(string error)
     {
-        SystemMessageUI.Instance.ShowMessage("STOMP 에러: " + error);
+        SystemMessageUI.Instance.ShowMessage("서버와 연결에 실패했습니다. [껐다 켜주세요]");
         Debug.LogError("STOMP 에러: " + error);
     }
 
@@ -133,7 +132,7 @@ public class StompConnector : MonoBehaviour
         }
         else
         {
-            SystemMessageUI.Instance.ShowMessage("STOMP 서버에 연결되지 않았습니다.");
+            SystemMessageUI.Instance.ShowMessage("서버에 연결되지 않았습니다.");
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
     }
@@ -149,7 +148,7 @@ public class StompConnector : MonoBehaviour
         }
         else
         {
-            SystemMessageUI.Instance.ShowMessage("STOMP 서버에 연결되지 않았습니다.");
+            SystemMessageUI.Instance.ShowMessage("서버에 연결되지 않았습니다.");
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
     }
@@ -165,7 +164,6 @@ public class StompConnector : MonoBehaviour
         }
         else
         {
-            SystemMessageUI.Instance.ShowMessage("STOMP 서버에 연결되지 않았습니다.");
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
     }
@@ -181,7 +179,6 @@ public class StompConnector : MonoBehaviour
         }
         else
         {
-            SystemMessageUI.Instance.ShowMessage("STOMP 서버에 연결되지 않았습니다.");
             Debug.LogError("STOMP 서버에 연결되지 않았습니다.");
         }
     }
