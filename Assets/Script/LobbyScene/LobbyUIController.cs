@@ -17,6 +17,7 @@ public class LobbyUIController : MonoBehaviour
     {
         Debug.Log("LobbyUIController Start");
 
+        deckDropdown.onValueChanged.AddListener(OnDropdownChanged);
         StartCoroutine(LoadUserInfo());
     }
     
@@ -46,8 +47,6 @@ public class LobbyUIController : MonoBehaviour
         // JsonHelper 는 이전에 정의한 generic 래퍼 유틸리티
         userDecks = JsonHelper.FromJson<DeckResponseDto>(www.downloadHandler.text);
         
-        DeckSceneContext.CurrentDeck = userDecks.First(d => d.id == SceneContext.User.selectedDeckId);
-        
         PopulateDropdown();
     }
 
@@ -76,8 +75,10 @@ public class LobbyUIController : MonoBehaviour
     // 3) 드랍다운에서 선택 바뀌었을 때
     public void OnDropdownChanged(int newIndex)
     {
+        
         var selected = userDecks[newIndex];
         DeckSceneContext.CurrentDeck = selected;     // 컨텍스트 갱신
+        Debug.Log($"index: {newIndex} 선택된 덱: {selected.name} (ID: {selected.id})");
         UpdateCaption(selected.name);                // 상단 텍스트 갱신
         StartCoroutine(SelectDeckCoroutine(DeckSceneContext.CurrentDeck.id));
     }
