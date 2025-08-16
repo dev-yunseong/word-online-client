@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -62,7 +63,8 @@ namespace Script.DeckScene
         public GameObject cardInDeckItemPrefab;        // 덱 카드 UI 프리팹
         public GameObject createDeckPrefab;        // 덱 생성 UI 프리팹
         public Button submitDeckButton;        // 덱 제출 버튼
-
+        public TMP_InputField deckNameInputField; // 덱 이름 입력 필드
+        
         private DeckResponseDto[] userDecks;
         private CardDto[] ownedCards;
 
@@ -193,6 +195,7 @@ namespace Script.DeckScene
             
             //DeckContext에 현재 덱 저장
             DeckSceneContext.CurrentDeck = deck;
+            deckNameInputField.SetTextWithoutNotify(deck.name);
 
             ReloadDeckList();
 
@@ -207,6 +210,8 @@ namespace Script.DeckScene
             
             //DeckContext에 현재 덱 저장
             DeckSceneContext.CurrentDeck = deck;
+            deckNameInputField.SetTextWithoutNotify(deck.name);
+            
             submitDeckButton.onClick.RemoveAllListeners();
             submitDeckButton.onClick.AddListener(() => OnNewDeckSubmit());
         }
@@ -249,39 +254,13 @@ namespace Script.DeckScene
         
         private IEnumerator PostDeckCoroutine(DeckResponseDto deck)
         {
-            //vaild한가?
-            int typeCount  = deck.cards
-                .Where(c => c.type == "Type")
-                .Select(c => c.name)     // 이름 기준으로
-                .Distinct()              // 중복 제거
-                .Count();
-            int magicCount = deck.cards
-                .Where(c => c.type == "Magic")
-                .Select(c => c.name)
-                .Distinct()
-                .Count();
-
-            Debug.Log($"Submit Try - cards : {deck.cards.Length} type : {typeCount} magic : {magicCount}");
-            
-            
-            if (deck.cards.Length != 10)
+            if (!ValidateDeck(deck))
             {
-                SystemMessageUI.Instance.ShowMessage("덱에 카드가 10장 있어야 합니다!");
-                yield break;
-            }
-            else if (typeCount < 2)
-            {
-                SystemMessageUI.Instance.ShowMessage("덱에 속성이 2종류 이상 있어야 합니다!");
-                yield break;
-            }
-            else if (magicCount < 2)
-            {
-                SystemMessageUI.Instance.ShowMessage("덱에 마법이 2종류 이상 있어야 합니다!");
                 yield break;
             }
             
             var reqDto = new DeckRequestDto {
-                name    = deck.name,
+                name    = deckNameInputField.text,
                 cardIds = deck.cards.Select(c => c.id).ToArray()
             };
             
@@ -318,39 +297,13 @@ namespace Script.DeckScene
         
         private IEnumerator PutDeckCoroutine(DeckResponseDto deck)
         {
-            //vaild한가?
-            int typeCount  = deck.cards
-                .Where(c => c.type == "Type")
-                .Select(c => c.name)     // 이름 기준으로
-                .Distinct()              // 중복 제거
-                .Count();
-            int magicCount = deck.cards
-                .Where(c => c.type == "Magic")
-                .Select(c => c.name)
-                .Distinct()
-                .Count();
-
-            Debug.Log($"Submit Try - cards : {deck.cards.Length} type : {typeCount} magic : {magicCount}");
-            
-            
-            if (deck.cards.Length != 10)
+            if (!ValidateDeck(deck))
             {
-                SystemMessageUI.Instance.ShowMessage("덱에 카드가 10장 있어야 합니다!");
-                yield break;
-            }
-            else if (typeCount < 2)
-            {
-                SystemMessageUI.Instance.ShowMessage("덱에 속성이 2종류 이상 있어야 합니다!");
-                yield break;
-            }
-            else if (magicCount < 2)
-            {
-                SystemMessageUI.Instance.ShowMessage("덱에 마법이 2종류 이상 있어야 합니다!");
                 yield break;
             }
             
             var reqDto = new DeckRequestDto {
-                name    = deck.name,
+                name    = deckNameInputField.text,
                 cardIds = deck.cards.Select(c => c.id).ToArray()
             };
             
@@ -384,6 +337,40 @@ namespace Script.DeckScene
                 SystemMessageUI.Instance.ShowMessage("덱 수정 성공!");
                 Debug.Log($"덱 수정 성공: {www.downloadHandler.text}");
             }
+        }
+
+        private bool ValidateDeck(DeckResponseDto deck)
+        {
+            int typeCount  = deck.cards
+                .Where(c => c.type == "Type")
+                .Select(c => c.name)     // 이름 기준으로
+                .Distinct()              // 중복 제거
+                .Count();
+            int magicCount = deck.cards
+                .Where(c => c.type == "Magic")
+                .Select(c => c.name)
+                .Distinct()
+                .Count();
+
+            Debug.Log($"Submit Try - cards : {deck.cards.Length} type : {typeCount} magic : {magicCount}");
+            
+            
+            if (deck.cards.Length != 10)
+            {
+                SystemMessageUI.Instance.ShowMessage("덱에 카드가 10장 있어야 합니다!");
+                return false;
+            }
+            else if (typeCount < 2)
+            {
+                SystemMessageUI.Instance.ShowMessage("덱에 속성이 2종류 이상 있어야 합니다!");
+                return false;
+            }
+            else if (magicCount < 2)
+            {
+                SystemMessageUI.Instance.ShowMessage("덱에 마법이 2종류 이상 있어야 합니다!");
+                return false;
+            }
+            return true;
         }
     }
 }
