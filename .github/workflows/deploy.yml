@@ -20,7 +20,7 @@ jobs:
           unityVersion: 2022.3.34f1
           targetPlatform: WebGL
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: WebGL-Build
           path: build/WebGL
