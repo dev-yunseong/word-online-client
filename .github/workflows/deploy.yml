@@ -1,8 +1,8 @@
-name: Build WebGL
+name: Build and Deploy WebGL
 
 on:
   push:
-    branches: 
+    branches:
       - main
       - feature/64
   pull_request:
@@ -13,28 +13,30 @@ jobs:
   buildWebGL:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Library folder
+        uses: actions/cache@v4
         with:
           path: Library
-          key: Library-WebGL
-          restore-keys: Library-
-      - name: Activate Unity License
-        uses: game-ci/unity-activate@v2
-        with:
-          unityVersion: 2022.3.59f1
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          key: Library-WebGL-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-WebGL-
+            Library-
 
       - name: Build WebGL
         uses: game-ci/unity-builder@v4
-        with:
-          unityVersion: 2022.3.59f1
-          targetPlatform: WebGL
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-
-      - uses: actions/upload-artifact@v4
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: 2022.3.5f1
+          targetPlatform: WebGL
+          
+      - name: Upload WebGL build artifact
+        uses: actions/upload-artifact@v4
         with:
           name: WebGL-Build
           path: build/WebGL
