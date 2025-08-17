@@ -19,6 +19,7 @@ jobs:
         uses: game-ci/unity-activate@v2
         with:
           unityVersion: 2022.3.34f1
+          customImage: unityci/editor:ubuntu-2022.3.34f1-webgl-3.1.0
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
