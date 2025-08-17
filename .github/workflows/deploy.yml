@@ -14,16 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Activate Unity License
-        uses: game-ci/unity-activate@v2
-        with:
-          unityVersion: 2022.3.34f1
-          customImage: 'unityci/editor:ubuntu-2022.3.34f1-webgl-3.1.0'
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-
-
+        
       - name: Build WebGL
         uses: game-ci/unity-builder@v2
         with:
