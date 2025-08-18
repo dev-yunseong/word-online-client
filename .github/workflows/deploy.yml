@@ -57,7 +57,7 @@ jobs:
           # copy build result
           rm -rf ./Build
           rm -rf ./index.html
-          cp -r ../build/WebGL/* ./
+          cp -r ../build/WebGL/WebGL/* ./
           
           ls -R 
 
