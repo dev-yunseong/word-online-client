@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: WebGL-Build
-          path: build/WebGL
+          path: build
           
       - name: Push to another repo
         run: |
@@ -53,7 +53,7 @@ jobs:
           cd WordOnline_Play
 
           # copy build result
-          rm -rf ./build
+          rm -rf ./Build
           rm -rf ./index.html
           cp -r ../build/WebGL/* ./
 
