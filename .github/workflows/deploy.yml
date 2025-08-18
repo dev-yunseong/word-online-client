@@ -49,13 +49,17 @@ jobs:
 
           # clone target repo
           git clone https://x-access-token:${{ secrets.WORD_ONLINE_PLAY_TOKEN }}@github.com/Apptive-Game-Team/WordOnline_Play.git
-
+          
+          ls -R build
+          
           cd WordOnline_Play
 
           # copy build result
           rm -rf ./Build
           rm -rf ./index.html
           cp -r ../build/WebGL/* ./
+          
+          ls -R 
 
           git add .
           git commit -m "Update WebGL build from main repo"
